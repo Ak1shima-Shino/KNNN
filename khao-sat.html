@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Báo Cáo Thực Trạng Khảo Sát: Sinh Viên & MXH</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #34495e;
+        --accent-color: #6f42c1; /* Đổi tone màu tím chủ đạo cho phần Thực trạng */
+        --success-color: #28a745;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --info-color: #17a2b8;
+        --bg-light: #f4f6f9;
+      }
+
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background-color: var(--bg-light);
+        color: #333;
+        line-height: 1.7;
+        position: relative;
+      }
+
+      /* --- Màn hình Hướng dẫn (Tutorial Overlay) --- */
+      .tutorial-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 9998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+      .tutorial-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .tutorial-box {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        z-index: 10000;
+        max-width: 400px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        margin-left: 250px;
+      }
+      .highlight-target {
+        position: relative;
+        z-index: 9999 !important;
+        background-color: white !important;
+        box-shadow:
+          0 0 0 6px rgba(255, 255, 255, 0.9),
+          0 0 20px rgba(111, 66, 193, 0.8) !important;
+        border-radius: 6px;
+        animation: pulse-highlight 2s infinite;
+      }
+      @keyframes pulse-highlight {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Hero Header */
+      .hero-section {
+        background: linear-gradient(135deg, #654ea3 0%, #eaafc8 100%);
+        color: white;
+        padding: 90px 0 60px;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .hero-title {
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Sidebar & TOC */
+      .sidebar {
+        position: sticky;
+        top: 85px;
+        background: white;
+        padding: 25px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+      }
+      .sidebar h5 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
+      .nav-pills .nav-link {
+        color: var(--secondary-color);
+        border-radius: 6px;
+        margin-bottom: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        padding: 8px 15px;
+      }
+      .nav-pills .main-nav-link.active {
+        background-color: var(--accent-color);
+        color: white;
+        box-shadow: 0 2px 5px rgba(111, 66, 193, 0.3);
+      }
+      .nav-pills .nav-link:hover:not(.active) {
+        background-color: #e9ecef;
+        transform: translateX(3px);
+      }
+
+      /* Submenu Styling */
+      .submenu {
+        display: none;
+        margin-left: 15px;
+        border-left: 2px solid #e9ecef;
+        padding-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      .submenu .nav-link {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 5px 10px;
+        color: #6c757d;
+        border-radius: 4px;
+      }
+      .submenu .nav-link.active {
+        background-color: transparent;
+        color: var(--accent-color);
+        border-left: 3px solid var(--accent-color);
+        border-radius: 0;
+        padding-left: 15px;
+        font-weight: 700;
+      }
+
+      /* Card Elements */
+      .content-card {
+        background: white;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 35px;
+        overflow: hidden;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .content-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+      .card-header-custom {
+        font-weight: 700;
+        padding: 16px 20px;
+        border-bottom: none;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        color: white;
+      }
+      .section-title {
+        border-bottom: 3px solid var(--accent-color);
+        padding-bottom: 10px;
+        margin-top: 40px;
+        margin-bottom: 25px;
+        color: var(--primary-color);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+      .sub-section-title {
+        color: var(--secondary-color);
+        font-weight: 700;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Progress Bar Styling */
+      .chart-container {
+        background: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .progress-wrapper {
+        margin-bottom: 15px;
+      }
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #495057;
+      }
+      .progress {
+        height: 14px;
+        border-radius: 8px;
+        background-color: #e9ecef;
+        overflow: visible;
+      }
+      .progress-bar {
+        border-radius: 8px;
+        position: relative;
+      }
+      .progress-bar::after {
+        content: attr(data-val);
+        position: absolute;
+        right: 5px;
+        top: -1px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Thêm các màu mở rộng */
+      .bg-purple {
+        background-color: #6f42c1 !important;
+      }
+      .bg-indigo {
+        background-color: #6610f2 !important;
+      }
+      .bg-pink {
+        background-color: #e83e8c !important;
+      }
+      .bg-orange {
+        background-color: #fd7e14 !important;
+      }
+      .bg-teal {
+        background-color: #20c997 !important;
+      }
+      .bg-cyan {
+        background-color: #17a2b8 !important;
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: rgba(255, 255, 255, 0.8);
+        padding: 40px 0 20px;
+        margin-top: 60px;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      .anchor-offset {
+        scroll-margin-top: 100px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-bs-spy="scroll"
+    data-bs-target="#toc-sidebar"
+    data-bs-offset="120"
+    tabindex="0"
+  >
+    <div style="position: fixed; top: 80px; left: 20px; z-index: 10001">
+      <a
+        href="index.html"
+        class="btn btn-dark rounded-pill shadow-lg px-4 py-2 border-2 border-warning"
+        style="font-weight: bold; font-size: 0.9rem"
+      >
+        <i class="fas fa-home me-2"></i> TRANG CHỦ
+      </a>
+    </div>
+
+    <div class="tutorial-overlay" id="tutorialOverlay">
+      <div class="tutorial-box">
+        <h4 class="text-purple mb-3">
+          <i class="fas fa-magic me-2"></i>Hướng Dẫn Đọc Dữ Liệu
+        </h4>
+        <p class="text-muted mb-4">
+          Các số liệu đã được phân cụm chi tiết. Hãy nhấn vào
+          <strong>"Thói Quen Sử Dụng"</strong> hoặc cuộn trang để tự động mở ra
+          các bảng dữ liệu chuyên sâu nhé!
+        </p>
+        <button
+          class="btn btn-primary fw-bold px-5 rounded-pill"
+          style="background-color: var(--accent-color)"
+          id="closeTutorialBtn"
+        >
+          Khám phá ngay
+        </button>
+      </div>
+    </div>
+
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          ><i class="fas fa-poll me-2" style="color: #eaafc8"></i>EduSurvey</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#thong-tin">Thông Tin Chung</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#thoi-quen">Thói Quen</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#hoc-tap">Học Tập</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tam-ly">Tâm Lý & Sức Khỏe</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nhan-thuc">Kiểm Soát</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero-section text-center">
+      <div class="container">
+        <h1 class="display-4 hero-title mb-3">Thực Trạng Khảo Sát</h1>
+        <p class="lead fw-light">
+          Bức tranh toàn cảnh về sinh viên và không gian số dựa trên 110 mẫu
+          khảo sát thực tế.
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <aside class="col-lg-3 d-none d-lg-block">
+          <nav id="toc-sidebar" class="sidebar flex-column nav nav-pills">
+            <h5 class="text-uppercase fw-bold">
+              <i class="fas fa-list-ul me-2"></i>Mục Lục
+            </h5>
+
+            <a class="nav-link main-nav-link" href="#thong-tin"
+              >I. Thông Tin Chung</a
+            >
+
+            <a
+              class="nav-link main-nav-link"
+              href="#thoi-quen"
+              id="tutorial-target-menu"
+              >II. Thói Quen Sử Dụng</a
+            >
+            <div class="submenu nav flex-column" id="submenu-thoi-quen">
+              <a class="nav-link" href="#thoi-quen-1"
+                >1. Thời lượng & Khung giờ</a
+              >
+              <a class="nav-link" href="#thoi-quen-2">2. Nền tảng & Mục đích</a>
+            </div>
+
+            <a class="nav-link main-nav-link" href="#hoc-tap"
+              >III. Khía Cạnh Học Tập</a
+            >
+            <div class="submenu nav flex-column" id="submenu-hoc-tap">
+              <a class="nav-link" href="#hoc-tap-1">1. Mức độ hỗ trợ</a>
+              <a class="nav-link" href="#hoc-tap-2"
+                >2. Mất tập trung & Trì hoãn</a
+              >
+            </div>
+
+            <a class="nav-link main-nav-link" href="#tam-ly"
+              >IV. Tâm Lý & Sức Khỏe</a
+            >
+            <div class="submenu nav flex-column" id="submenu-tam-ly">
+              <a class="nav-link" href="#tam-ly-1">1. Ảnh hưởng Tâm lý</a>
+              <a class="nav-link" href="#tam-ly-2">2. Thể chất & Giấc ngủ</a>
+            </div>
+
+            <a class="nav-link main-nav-link" href="#nhan-thuc"
+              >V. Mối Quan Hệ & Kiểm Soát</a
+            >
+            <div class="submenu nav flex-column" id="submenu-nhan-thuc">
+              <a class="nav-link" href="#nhan-thuc-1">1. Ảo hóa giao tiếp</a>
+              <a class="nav-link" href="#nhan-thuc-2">2. Nhận thức lạm dụng</a>
+            </div>
+          </nav>
+        </aside>
+
+        <main class="col-lg-9">
+          <section id="thong-tin" class="anchor-offset mb-5">
+            <h2 class="section-title">
+              <i class="fas fa-id-card text-primary me-2"></i>I. Thông Tin Chung
+              (110 Mẫu)
+            </h2>
+            <div class="content-card card">
+              <div class="card-body">
+                <p class="mb-3">
+                  Khảo sát thu hút chủ yếu sinh viên năm 1 và năm 2, phản ánh
+                  một thế hệ có độ gắn kết từ rất sớm với không gian số
+                  <span class="d-none">[cite: 1020, 1188, 1190]</span>.
+                </p>
+
+                <div class="row">
+                  <div class="col-md-6 border-end">
+                    <div class="chart-container h-100">
+                      <p class="text-muted fw-bold mb-3">Tỷ lệ theo Năm học</p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Sinh viên Năm 2</span><span>45.5%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-primary"
+                            style="width: 45.5%"
+                            data-val="45.5%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Sinh viên Năm 1</span><span>29.1%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-info"
+                            style="width: 29.1%"
+                            data-val="29.1%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Đã tốt nghiệp (Đối chứng)</span
+                          ><span>20.9%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-secondary"
+                            style="width: 20.9%"
+                            data-val="20.9%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="chart-container h-100">
+                      <p class="text-muted fw-bold mb-3">
+                        Thời gian bắt đầu dùng MXH
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Hơn 6 năm</span><span>63.6%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-success"
+                            style="width: 63.6%"
+                            data-val="63.6%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Từ 4 - 6 năm</span><span>25.5%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-warning"
+                            style="width: 25.5%"
+                            data-val="25.5%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Khác</span><span>10.9%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 10.9%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="thoi-quen" class="anchor-offset mb-5">
+            <h2 class="section-title text-purple">
+              <i class="fas fa-mobile-alt me-2"></i>II. Thói Quen Sử Dụng
+            </h2>
+
+            <div
+              id="thoi-quen-1"
+              class="content-card card anchor-offset border-purple border-2"
+            >
+              <div class="card-header card-header-custom bg-purple">
+                1. Thời lượng và Khung giờ hoạt động
+              </div>
+              <div class="card-body">
+                <p>
+                  Đáng báo động khi có tới <strong>hơn 80%</strong> đối tượng
+                  khảo sát sử dụng MXH vượt quá 2 giờ/ngày, và hơn một nửa lướt
+                  điện thoại suốt "Cả ngày"
+                  <span class="d-none">[cite: 1022, 1202, 1204, 1205]</span>.
+                </p>
+
+                <div class="chart-container">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <p class="text-muted fw-bold mb-3">
+                        Thời lượng sử dụng mỗi ngày
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Trên 6 giờ (Ngâm mình)</span><span>30%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 30%"
+                            data-val="30%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>2 - 4 giờ</span><span>28.2%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-warning"
+                            style="width: 28.2%"
+                            data-val="28.2%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>4 - 6 giờ</span><span>22.7%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-orange"
+                            style="width: 22.7%"
+                            data-val="22.7%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mt-4 mt-md-0">
+                      <p class="text-muted fw-bold mb-3">
+                        Khung giờ hoạt động chính
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Cả ngày</span><span>58.2%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-purple"
+                            style="width: 58.2%"
+                            data-val="58.2%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Buổi tối</span><span>36.4%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-dark"
+                            style="width: 36.4%"
+                            data-val="36.4%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="thoi-quen-2"
+              class="content-card card anchor-offset border-purple border-2"
+            >
+              <div class="card-header card-header-custom bg-purple">
+                2. Nền tảng và Phản xạ vô thức
+              </div>
+              <div class="card-body">
+                <p>
+                  <strong>TikTok (66.4%)</strong> và
+                  <strong>Facebook (65.5%)</strong> là hai nền tảng chiếm ưu thế
+                  tuyệt đối. Có tới <strong>96%</strong> sinh viên mở ứng dụng
+                  như một phản xạ tự nhiên khi rảnh rỗi, và mục đích chính là
+                  <strong>Giải trí (64.5%)</strong>
+                  <span class="d-none"
+                    >[cite: 1023, 1024, 1206, 1208, 1211]</span
+                  >.
+                </p>
+
+                <div class="chart-container bg-light">
+                  <p class="text-muted fw-bold mb-3">
+                    Mở ứng dụng khi rảnh rỗi (Phản xạ vô thức)
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên</span><span>39.1%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 39.1%"
+                        data-val="39.1%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng</span><span>32.7%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 32.7%"
+                        data-val="32.7%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Luôn luôn</span><span>24.5%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-purple"
+                        style="width: 24.5%"
+                        data-val="24.5%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="hoc-tap" class="anchor-offset mb-5">
+            <h2 class="section-title text-success">
+              <i class="fas fa-book-open me-2"></i>III. Khía Cạnh Học Tập
+            </h2>
+
+            <div id="hoc-tap-1" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-check-circle me-2"></i>1. Lăng kính mặt sáng:
+                  Sự hỗ trợ
+                </h5>
+                <p>
+                  Mạng xã hội hoạt động như một hệ sinh thái học tập mở. Khoảng
+                  <strong>60%</strong> sinh viên thường xuyên (41.8%) và luôn
+                  luôn (18.2%) tra cứu tài liệu trên mạng
+                  <span class="d-none">[cite: 1026, 1028, 1221]</span>.
+                </p>
+
+                <div class="chart-container border-success">
+                  <p class="text-success fw-bold mb-3">
+                    Mức độ MXH giúp ích cho học tập
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Khá nhiều</span><span>43.6%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 43.6%"
+                        data-val="43.6%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Rất nhiều</span><span>20.9%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-teal"
+                        style="width: 20.9%"
+                        data-val="20.9%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="hoc-tap-2" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-danger mt-0">
+                  <i class="fas fa-times-circle me-2"></i>2. Lăng kính mặt tối:
+                  Xao nhãng và Trì hoãn
+                </h5>
+                <p>
+                  Đi kèm với tiện ích là hậu quả đáng báo động: Hơn
+                  <strong>75%</strong> sinh viên bị mất tập trung khi học (Thỉnh
+                  thoảng 42.7%, Thường xuyên 32.7%)
+                  <span class="d-none">[cite: 1029, 1030, 1224]</span>.
+                </p>
+
+                <div class="chart-container border-danger bg-white">
+                  <p class="text-danger fw-bold mb-3">
+                    Trì hoãn việc học để lướt mạng
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng</span><span>36.4%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 36.4%"
+                        data-val="36.4%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên</span><span>27.3%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 27.3%"
+                        data-val="27.3%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Luôn luôn trì hoãn</span><span>15.5%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-purple"
+                        style="width: 15.5%"
+                        data-val="15.5%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="tam-ly" class="anchor-offset mb-5">
+            <h2 class="section-title text-info">
+              <i class="fas fa-heartbeat me-2"></i>IV. Tâm Lý & Sức Khỏe Thể
+              Chất
+            </h2>
+
+            <div
+              id="tam-ly-1"
+              class="content-card card anchor-offset border-info border-2"
+            >
+              <div class="card-header card-header-custom bg-info">
+                1. Bóng tối Tâm lý & Hội chứng Phụ thuộc
+              </div>
+              <div class="card-body">
+                <p>
+                  Có một nhóm sinh viên (<strong>~40%</strong>) thỉnh thoảng
+                  hoặc thường xuyên cảm thấy buồn bã, cô đơn sau khi tắt thiết
+                  bị điện thoại <span class="d-none">[cite: 1033, 1235]</span>.
+                  Về sự phụ thuộc, gần <strong>80%</strong> có biểu hiện
+                  "nghiện" ở nhiều mức độ
+                  <span class="d-none">[cite: 1241]</span>.
+                </p>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="chart-container">
+                      <p class="text-muted fw-bold mb-2">
+                        Ảnh hưởng Tâm trạng trong ngày
+                      </p>
+                      <div class="progress-wrapper mb-2">
+                        <div class="progress-label">
+                          <span>Bị ảnh hưởng Trung bình</span><span>31.8%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-warning"
+                            style="width: 31.8%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper mb-0">
+                        <div class="progress-label">
+                          <span>Bị ảnh hưởng Nhiều</span><span>13.6%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 13.6%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="chart-container">
+                      <p class="text-muted fw-bold mb-2">
+                        Tự nhận diện "Nghiện" MXH
+                      </p>
+                      <div class="progress-wrapper mb-2">
+                        <div class="progress-label">
+                          <span>Có biểu hiện (Ít/Thỉnh thoảng/Nhiều)</span
+                          ><span>78.2%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-purple"
+                            style="width: 78.2%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper mb-0">
+                        <div class="progress-label">
+                          <span>Hoàn toàn không</span><span>21.8%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-success"
+                            style="width: 21.8%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="tam-ly-2"
+              class="content-card card anchor-offset border-info border-2"
+            >
+              <div class="card-header card-header-custom bg-info">
+                2. Sự tàn phá Giấc ngủ và Thể lực
+              </div>
+              <div class="card-body">
+                <p>
+                  Thói quen dùng điện thoại trước khi ngủ do
+                  <strong>hơn 72%</strong> sinh viên duy trì đang tàn phá giấc
+                  ngủ, khiến <strong>24.5%</strong> sinh viên rơi vào trạng thái
+                  mệt mỏi, kiệt sức kéo dài
+                  <span class="d-none">[cite: 1034, 1249, 1253]</span>.
+                </p>
+
+                <div class="chart-container">
+                  <p class="text-info fw-bold mb-3">
+                    Triệu chứng mỏi mắt / đau đầu do dùng lâu
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Mức độ Trung bình</span><span>38.2%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 38.2%"
+                        data-val="38.2%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Mức độ Nhiều</span><span>22.7%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 22.7%"
+                        data-val="22.7%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="nhan-thuc" class="anchor-offset mb-5">
+            <h2 class="section-title text-warning">
+              <i class="fas fa-balance-scale me-2"></i>V. Mối Quan Hệ & Kiểm
+              Soát
+            </h2>
+
+            <div
+              id="nhan-thuc-1"
+              class="content-card card anchor-offset border-warning border-2"
+            >
+              <div class="card-header card-header-custom text-dark bg-warning">
+                1. Sự "Ảo hóa" Mối quan hệ Giao tiếp
+              </div>
+              <div class="card-body">
+                <p>
+                  Dù giúp xóa rào cản địa lý hiệu quả (66%), sự tiện lợi này dẫn
+                  đến việc <strong>44.5%</strong> thỉnh thoảng và
+                  <strong>20%</strong> thường xuyên ưu tiên nhắn tin online hơn
+                  gặp mặt trực tiếp. Nó làm mai một kỹ năng xã hội khiến giao
+                  tiếp ngoài đời trở nên gượng gạo
+                  <span class="d-none">[cite: 1036, 1037, 1262, 1264]</span>.
+                </p>
+
+                <div class="chart-container bg-light">
+                  <p class="text-dark fw-bold mb-3">
+                    Dành ít thời gian cho gia đình vì mải lướt MXH
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng</span><span>40.9%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 40.9%"
+                        data-val="40.9%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên</span><span>8.2%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 8.2%"
+                        data-val="8.2%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="nhan-thuc-2"
+              class="content-card card anchor-offset border-warning border-2"
+            >
+              <div class="card-header card-header-custom text-dark bg-warning">
+                2. Nhận thức lạm dụng & Nỗ lực kiểm soát
+              </div>
+              <div class="card-body">
+                <p>
+                  Tổng cộng có <strong>63.6%</strong> sinh viên tự đánh giá mình
+                  đang lướt mạng quá nhiều (23.6% khẳng định là "Quá nhiều").
+                  Mặc dù <strong>45.5%</strong> sinh viên đang cố gắng giảm,
+                  nhưng sự kiểm soát thường thất bại
+                  <span class="d-none">[cite: 1041, 1042, 1278]</span>.
+                </p>
+
+                <div class="row align-items-center">
+                  <div class="col-md-6 border-end">
+                    <h5 class="sub-section-title mt-0">
+                      <i class="fas fa-clock me-2"></i>Thực trạng đặt giới hạn
+                    </h5>
+                    <div class="progress-wrapper">
+                      <div class="progress-label">
+                        <span>Hoàn toàn Không đặt</span><span>41.8%</span>
+                      </div>
+                      <div class="progress">
+                        <div
+                          class="progress-bar bg-danger"
+                          style="width: 41.8%"
+                          data-val="41.8%"
+                        ></div>
+                      </div>
+                    </div>
+                    <div class="progress-wrapper">
+                      <div class="progress-label">
+                        <span>Có đặt nhưng bỏ qua luật</span><span>17.3%</span>
+                      </div>
+                      <div class="progress">
+                        <div
+                          class="progress-bar bg-orange"
+                          style="width: 17.3%"
+                          data-val="17.3%"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 ps-md-4">
+                    <h5 class="sub-section-title mt-4 mt-md-0">
+                      <i class="fas fa-lightbulb me-2"></i>Giải pháp ưu tiên
+                      (Sinh viên chọn)
+                    </h5>
+                    <ul class="list-unstyled mb-0">
+                      <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>Lập kế
+                        hoạch học tập: <strong>36.4%</strong>
+                      </li>
+                      <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>Dùng App
+                        giới hạn giờ: <strong>29.1%</strong>
+                      </li>
+                      <li class="mb-2">
+                        <i class="fas fa-times text-danger me-2"></i>Xóa hẳn ứng
+                        dụng: <strong>13.6%</strong> (Rất ít chọn)
+                        <span class="d-none">[cite: 1043, 1287, 1288]</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="text-center">
+      <div class="container">
+        <h5 class="fw-bold mb-3">EduSurvey Dashboard</h5>
+        <p class="mb-0">
+          &copy; 2026 Báo Cáo Thực Trạng Khảo Sát (110 Mẫu). Hệ thống phân tích
+          bằng HTML5/Bootstrap 5.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Logic cho Sidebar Mục Lục thông minh
+        const submenus = document.querySelectorAll(".submenu");
+        const mainLinks = document.querySelectorAll(".main-nav-link");
+
+        const hideAllSubmenus = () => {
+          submenus.forEach((menu) => {
+            menu.style.display = "none";
+          });
+        };
+
+        mainLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            hideAllSubmenus();
+            const nextEl = link.nextElementSibling;
+            if (nextEl && nextEl.classList.contains("submenu")) {
+              nextEl.style.display = "flex";
+            }
+          });
+        });
+
+        // Scrollspy auto-expand
+        const scrollSpyElement = document.body;
+        scrollSpyElement.addEventListener("activate.bs.scrollspy", (e) => {
+          const activeAnchor = e.target;
+
+          if (activeAnchor.classList.contains("main-nav-link")) {
+            hideAllSubmenus();
+            const nextEl = activeAnchor.nextElementSibling;
+            if (nextEl && nextEl.classList.contains("submenu")) {
+              nextEl.style.display = "flex";
+            }
+          } else if (activeAnchor.closest(".submenu")) {
+            hideAllSubmenus();
+            const parentSubmenu = activeAnchor.closest(".submenu");
+            parentSubmenu.style.display = "flex";
+            const parentMain = parentSubmenu.previousElementSibling;
+            if (parentMain) {
+              parentMain.classList.add("active");
+            }
+          }
+        });
+
+        // Delay để load trạng thái ban đầu
+        setTimeout(() => {
+          const currentActive = document.querySelector(
+            ".sidebar .nav-link.active",
+          );
+          if (currentActive) {
+            if (currentActive.classList.contains("main-nav-link")) {
+              const nextEl = currentActive.nextElementSibling;
+              if (nextEl && nextEl.classList.contains("submenu"))
+                nextEl.style.display = "flex";
+            } else if (currentActive.closest(".submenu")) {
+              currentActive.closest(".submenu").style.display = "flex";
+            }
+          }
+        }, 300);
+
+        // Xử lý Màn hình Hướng dẫn (Tutorial Overlay)
+        const tutorialOverlay = document.getElementById("tutorialOverlay");
+        const closeBtn = document.getElementById("closeTutorialBtn");
+        const targetMenu = document.getElementById("tutorial-target-menu");
+
+        if (tutorialOverlay && closeBtn && targetMenu) {
+          targetMenu.classList.add("highlight-target");
+
+          closeBtn.addEventListener("click", () => {
+            tutorialOverlay.classList.add("hidden");
+            targetMenu.classList.remove("highlight-target");
+            if (targetMenu.getAttribute("href") === location.hash) {
+              targetMenu.classList.add("active");
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

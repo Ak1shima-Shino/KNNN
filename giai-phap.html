@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đề Xuất Giải Pháp: Sinh Viên & Mạng Xã Hội</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #34495e;
+        --accent-color: #007bff;
+        --success-color: #28a745;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --info-color: #17a2b8;
+        --purple-color: #6f42c1;
+        --bg-light: #f4f6f9;
+      }
+
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background-color: var(--bg-light);
+        color: #333;
+        line-height: 1.7;
+        position: relative;
+      }
+
+      /* --- CSS Màn hình Hướng dẫn (Tutorial Overlay) --- */
+      .tutorial-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 9998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+      .tutorial-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .tutorial-box {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        z-index: 10000;
+        max-width: 400px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        margin-left: 250px;
+      }
+      .highlight-target {
+        position: relative;
+        z-index: 9999 !important;
+        background-color: white !important;
+        box-shadow:
+          0 0 0 6px rgba(255, 255, 255, 0.9),
+          0 0 20px rgba(0, 123, 255, 0.8) !important;
+        border-radius: 6px;
+        animation: pulse-highlight 2s infinite;
+      }
+      @keyframes pulse-highlight {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Hero Header */
+      .hero-section {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        padding: 90px 0 60px;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .hero-title {
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Navbar */
+      .navbar-brand {
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      /* Sidebar & TOC */
+      .sidebar {
+        position: sticky;
+        top: 85px;
+        background: white;
+        padding: 25px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+      }
+
+      .sidebar h5 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
+
+      .nav-pills .nav-link {
+        color: var(--secondary-color);
+        border-radius: 6px;
+        margin-bottom: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        padding: 8px 15px;
+      }
+
+      .nav-pills .main-nav-link.active {
+        background-color: var(--accent-color);
+        color: white;
+        box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .nav-pills .nav-link:hover:not(.active) {
+        background-color: #e9ecef;
+        transform: translateX(3px);
+      }
+
+      /* Submenu Styling */
+      .submenu {
+        display: none;
+        margin-left: 15px;
+        border-left: 2px solid #e9ecef;
+        padding-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      .submenu .nav-link {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 5px 10px;
+        color: #6c757d;
+        border-radius: 4px;
+      }
+      .submenu .nav-link.active {
+        background-color: transparent;
+        color: var(--accent-color);
+        border-left: 3px solid var(--accent-color);
+        border-radius: 0;
+        padding-left: 15px;
+        font-weight: 700;
+      }
+
+      /* Card Elements */
+      .content-card {
+        background: white;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 35px;
+        overflow: hidden;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .content-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header-custom {
+        font-weight: 700;
+        padding: 16px 20px;
+        border-bottom: none;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        color: white;
+      }
+
+      .section-title {
+        border-bottom: 3px solid var(--accent-color);
+        padding-bottom: 10px;
+        margin-top: 40px;
+        margin-bottom: 25px;
+        color: var(--primary-color);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .sub-section-title {
+        color: var(--secondary-color);
+        font-weight: 700;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Chart / Progress Bar Wrapper */
+      .chart-container {
+        background: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .progress-wrapper {
+        margin-bottom: 15px;
+      }
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #495057;
+      }
+      .progress {
+        height: 14px;
+        border-radius: 8px;
+        background-color: #e9ecef;
+        overflow: visible;
+      }
+      .progress-bar {
+        border-radius: 8px;
+        position: relative;
+      }
+
+      .progress-bar::after {
+        content: attr(data-val);
+        position: absolute;
+        right: 5px;
+        top: -1px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+      }
+
+      .bg-never {
+        background-color: var(--info-color) !important;
+      }
+      .bg-rarely {
+        background-color: var(--success-color) !important;
+      }
+      .bg-sometimes {
+        background-color: var(--warning-color) !important;
+      }
+      .bg-often {
+        background-color: #fd7e14 !important;
+      }
+      .bg-always {
+        background-color: var(--danger-color) !important;
+      }
+      .bg-neutral {
+        background-color: var(--purple-color) !important;
+      }
+
+      .stat-highlight {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--accent-color);
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: rgba(255, 255, 255, 0.8);
+        padding: 40px 0 20px;
+        margin-top: 60px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      .anchor-offset {
+        scroll-margin-top: 100px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-bs-spy="scroll"
+    data-bs-target="#toc-sidebar"
+    data-bs-offset="120"
+    tabindex="0"
+  >
+    <div style="position: fixed; top: 80px; left: 20px; z-index: 10001">
+      <a
+        href="index.html"
+        class="btn btn-dark rounded-pill shadow-lg px-4 py-2 border-2 border-warning"
+        style="font-weight: bold; font-size: 0.9rem"
+      >
+        <i class="fas fa-home me-2"></i> TRANG CHỦ
+      </a>
+    </div>
+
+    <div class="tutorial-overlay" id="tutorialOverlay">
+      <div class="tutorial-box">
+        <h4 class="text-primary mb-3">
+          <i class="fas fa-hand-pointer me-2"></i>Hướng Dẫn Tương Tác
+        </h4>
+        <p class="text-muted mb-4">
+          Mời bạn nhấn vào các mục lớn như <strong>"Góc độ Cá nhân"</strong> ở
+          thanh bên trái. Hệ thống sẽ tự động mở ra các giải pháp chi tiết để
+          bạn dễ dàng theo dõi nhé!
+        </p>
+        <button
+          class="btn btn-success fw-bold px-5 rounded-pill"
+          id="closeTutorialBtn"
+        >
+          Khám phá ngay!
+        </button>
+      </div>
+    </div>
+
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          ><i class="fas fa-lightbulb me-2 text-warning"></i>EduSolutions</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#ca-nhan">Góc độ Cá nhân</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nha-truong">Góc độ Nhà trường</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#gia-dinh">Góc độ Gia đình</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#vi-mo">Góc độ Vĩ mô</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero-section text-center">
+      <div class="container">
+        <h1 class="display-4 hero-title mb-3">Đề Xuất Giải Pháp</h1>
+        <p class="lead fw-light">
+          Hành động thực tiễn giúp sinh viên sử dụng mạng xã hội một cách hiệu
+          quả và cân bằng.
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <aside class="col-lg-3 d-none d-lg-block">
+          <nav id="toc-sidebar" class="sidebar flex-column nav nav-pills">
+            <h5 class="text-uppercase fw-bold">
+              <i class="fas fa-list-ul me-2"></i>Mục Lục
+            </h5>
+
+            <a
+              class="nav-link main-nav-link"
+              href="#ca-nhan"
+              id="tutorial-target-menu"
+              >I. Góc Độ Cá Nhân</a
+            >
+            <div class="submenu nav flex-column" id="submenu-ca-nhan">
+              <a class="nav-link" href="#ca-nhan-1">1. Rào cản cơ học</a>
+              <a class="nav-link" href="#ca-nhan-2"
+                >2. Tái cấu trúc môi trường số</a
+              >
+              <a class="nav-link" href="#ca-nhan-3"
+                >3. Phân mảnh & Thay thế Dopamine</a
+              >
+            </div>
+
+            <a class="nav-link main-nav-link" href="#nha-truong"
+              >II. Góc Độ Nhà Trường</a
+            >
+            <div class="submenu nav flex-column" id="submenu-nha-truong">
+              <a class="nav-link" href="#nha-truong-1"
+                >1. Kích thích hệ sinh thái Offline</a
+              >
+              <a class="nav-link" href="#nha-truong-2"
+                >2. Giáo dục Năng lực Số</a
+              >
+            </div>
+
+            <a class="nav-link main-nav-link" href="#gia-dinh"
+              >III. Góc Độ Gia Đình</a
+            >
+            <div class="submenu nav flex-column" id="submenu-gia-dinh">
+              <a class="nav-link" href="#gia-dinh-1"
+                >1. Văn hóa "Không màn hình"</a
+              >
+              <a class="nav-link" href="#gia-dinh-2"
+                >2. Phá vỡ khoảng cách thế hệ</a
+              >
+            </div>
+
+            <a class="nav-link main-nav-link" href="#vi-mo">IV. Góc Độ Vĩ Mô</a>
+            <div class="submenu nav flex-column" id="submenu-vi-mo">
+              <a class="nav-link" href="#vi-mo-1">1. Thiết kế có đạo đức</a>
+              <a class="nav-link" href="#vi-mo-2">2. Truyền thông định hướng</a>
+            </div>
+          </nav>
+        </aside>
+
+        <main class="col-lg-9">
+          <section id="ca-nhan" class="anchor-offset mb-5">
+            <h2 class="section-title text-primary">
+              <i class="fas fa-user-graduate me-2"></i>I. Từ Góc Độ Cá Nhân
+              (Sinh viên)
+            </h2>
+            <p class="lead mb-4">
+              Nâng cao "Sức đề kháng số" và Kỷ luật bản thân để làm chủ công
+              nghệ.
+            </p>
+
+            <div class="alert alert-warning shadow-sm border-0 mb-4">
+              <h5 class="alert-heading fw-bold">
+                <i class="fas fa-exclamation-circle me-2"></i>Nghịch lý từ khảo
+                sát:
+              </h5>
+              <p class="mb-0">
+                Có tới <strong>63,6%</strong> sinh viên nhận thức được bản thân
+                dành quá nhiều thời gian cho MXH
+                <span class="d-none">[cite: 376]</span>, và
+                <strong>45,5%</strong> đang cố gắng giảm thời gian sử dụng nhưng
+                chưa hiệu quả <span class="d-none">[cite: 376]</span>. Thay vì
+                "cai nghiện" cực đoan bằng ý chí, cần các biện pháp kỹ thuật và
+                tâm lý <span class="d-none">[cite: 377]</span>.
+              </p>
+            </div>
+
+            <div
+              id="ca-nhan-1"
+              class="content-card card anchor-offset border-primary border-2"
+            >
+              <div class="card-header card-header-custom bg-primary">
+                1. Sử dụng "Rào cản cơ học" thay vì ý chí
+              </div>
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-md-7">
+                    <p>
+                      Với việc <strong>41,8%</strong> sinh viên hoàn toàn không
+                      đặt giới hạn thời gian và <strong>75%</strong> bị xao
+                      nhãng khi học, việc sử dụng các ứng dụng như Forest,
+                      AppBlock, hoặc Screen Time là bắt buộc
+                      <span class="d-none">[cite: 378]</span>.
+                    </p>
+                    <p>
+                      Khi cần tập trung cao độ (như tư duy thuật toán, thực hành
+                      phần cứng, code điều khiển linh kiện...), khóa ứng dụng
+                      giải trí sẽ triệt tiêu thói quen lướt vô thức
+                      <span class="d-none">[cite: 379]</span>.
+                    </p>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="chart-container py-3">
+                      <div class="progress-wrapper mb-2">
+                        <div class="progress-label">
+                          <span>Không đặt giới hạn</span><span>41.8%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 41.8%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper mb-0">
+                        <div class="progress-label">
+                          <span>Bị xao nhãng khi học</span><span>75%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-warning"
+                            style="width: 75%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="ca-nhan-2" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-primary mt-0">
+                  <i class="fas fa-filter me-2"></i>2. Tái cấu trúc môi trường
+                  số (Huấn luyện thuật toán)
+                </h5>
+                <p>
+                  Có tới <strong>96%</strong> sinh viên mở ứng dụng như một phản
+                  xạ tự nhiên <span class="d-none">[cite: 380]</span>. Để biến
+                  phản xạ này thành cơ hội học tập, sinh viên cần chủ động dọn
+                  dẹp bảng tin (unfollow trang vô bổ) và ưu tiên tương tác nội
+                  dung học thuật chuyên ngành
+                  <span class="d-none">[cite: 381]</span>.
+                </p>
+              </div>
+            </div>
+
+            <div id="ca-nhan-3" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-primary mt-0">
+                  <i class="fas fa-clock me-2"></i>3. Phân mảnh thời gian & Thay
+                  thế Dopamine
+                </h5>
+                <p>
+                  Cần quy hoạch thời gian lướt mạng vào khung giờ cố định
+                  (Time-boxing) <span class="d-none">[cite: 382]</span>. Quan
+                  trọng hơn, tìm kiếm "Dopamine tự nhiên" từ các thành tựu thực
+                  tế (hoàn thành dự án, chạy thành công một đoạn code) để thay
+                  thế thỏa mãn ngắn hạn từ MXH
+                  <span class="d-none">[cite: 383]</span>.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="nha-truong" class="anchor-offset mb-5">
+            <h2 class="section-title text-info">
+              <i class="fas fa-university me-2"></i>II. Từ Góc Độ Nhà Trường &
+              Tổ Chức
+            </h2>
+
+            <div class="alert alert-info shadow-sm border-0 mb-4">
+              <h5 class="alert-heading fw-bold">
+                <i class="fas fa-chart-pie me-2"></i>Thực trạng đáng ngại:
+              </h5>
+              <p class="mb-0">
+                <strong>40%</strong> sinh viên cảm thấy buồn bã/cô đơn sau khi
+                dùng MXH và <strong>44,5%</strong> thỉnh thoảng ưu tiên nhắn tin
+                online hơn gặp mặt trực tiếp
+                <span class="d-none">[cite: 384]</span>. Nhà trường cần can
+                thiệp khôi phục giá trị kết nối
+                <span class="d-none">[cite: 385]</span>.
+              </p>
+            </div>
+
+            <div
+              id="nha-truong-1"
+              class="content-card card anchor-offset border-info border-2"
+            >
+              <div class="card-header card-header-custom bg-info">
+                1. Kích thích hệ sinh thái Offline
+              </div>
+              <div class="card-body">
+                <p>
+                  Đoàn - Hội và Câu lạc bộ cần tăng cường tổ chức hoạt động
+                  ngoại khóa, thi học thuật, minigame gắn kết tại khuôn viên
+                  trường (ví dụ: sự kiện chia sẻ "Dấu trong tôi là...")
+                  <span class="d-none">[cite: 386]</span>.
+                </p>
+                <p class="mb-0 text-muted fst-italic">
+                  <i class="fas fa-quote-left me-2"></i>Những trải nghiệm "người
+                  thật việc thật" là liều thuốc hữu hiệu nhất chữa bệnh "ảo hóa"
+                  các mối quan hệ. <span class="d-none">[cite: 387]</span>
+                </p>
+              </div>
+            </div>
+
+            <div id="nha-truong-2" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-info mt-0">
+                  <i class="fas fa-shield-virus me-2"></i>2. Đưa "Giáo dục Năng
+                  lực Số" vào chương trình
+                </h5>
+                <p class="mb-0">
+                  Tổ chức workshop hướng dẫn bảo vệ tâm lý trước FOMO, cung cấp
+                  kênh hỗ trợ tâm lý chuyên nghiệp cho sinh viên trầm cảm do áp
+                  lực so sánh trên mạng <span class="d-none">[cite: 388]</span>.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="gia-dinh" class="anchor-offset mb-5">
+            <h2 class="section-title text-success">
+              <i class="fas fa-home me-2"></i>III. Từ Góc Độ Gia Đình
+            </h2>
+            <p class="lead mb-4">
+              Trở thành điểm tựa kết nối thay vì chỉ là sự cấm đoán.
+            </p>
+
+            <div
+              id="gia-dinh-1"
+              class="content-card card anchor-offset border-success border-2"
+            >
+              <div class="card-header card-header-custom bg-success">
+                1. Thiết lập văn hóa "Không màn hình" (No-tech zone)
+              </div>
+              <div class="card-body">
+                <div class="chart-container bg-light border-success mb-3">
+                  <p class="text-success fw-bold mb-2">
+                    Tác hại của việc dùng MXH trước khi ngủ:
+                  </p>
+                  <div class="progress-wrapper mb-2">
+                    <div class="progress-label">
+                      <span>Thói quen dùng trước khi ngủ</span><span>72%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-often"
+                        style="width: 72%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper mb-2">
+                    <div class="progress-label">
+                      <span>Bị mỏi mắt, đau đầu</span><span>60%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 60%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper mb-0">
+                    <div class="progress-label">
+                      <span>Mệt mỏi, suy nhược</span><span>24.5%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 24.5%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Sự can thiệp của gia đình là cực kỳ quan trọng khi hơn
+                  <strong>72%</strong> sinh viên dùng MXH ban đêm
+                  <span class="d-none">[cite: 390]</span>. Đây là nguyên nhân
+                  trực tiếp gây đau đầu (hơn 60%) và suy nhược (24,5%)
+                  <span class="d-none">[cite: 391]</span>.
+                </p>
+                <p class="mb-0">
+                  Cần xây dựng quy tắc: Không điện thoại trên giường ngủ, hoặc
+                  thời gian "No-tech zone" trong bữa ăn để thúc đẩy giao tiếp
+                  trực tiếp <span class="d-none">[cite: 392]</span>.
+                </p>
+              </div>
+            </div>
+
+            <div id="gia-dinh-2" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-comments me-2"></i>2. Phá vỡ khoảng cách thế
+                  hệ
+                </h5>
+                <p class="mb-0">
+                  Phụ huynh cần cởi mở tìm hiểu văn hóa mạng, đối thoại không
+                  phán xét thay vì cấm đoán. Giúp sinh viên cảm thấy được thấu
+                  hiểu và có nơi giãi bày rắc rối trên không gian mạng
+                  <span class="d-none">[cite: 393]</span>.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="vi-mo" class="anchor-offset mb-5">
+            <h2 class="section-title text-purple">
+              <i class="fas fa-globe me-2"></i>IV. Từ Góc Độ Vĩ Mô & Nền Tảng
+            </h2>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div
+                  id="vi-mo-1"
+                  class="content-card card anchor-offset h-100 border-0 shadow-sm bg-white"
+                >
+                  <div class="card-body">
+                    <h5
+                      class="sub-section-title mt-0"
+                      style="color: var(--purple-color)"
+                    >
+                      <i class="fas fa-laptop-code me-2"></i>1. Thiết kế có đạo
+                      đức
+                    </h5>
+                    <p class="mb-0">
+                      Cộng đồng cần yêu cầu nền tảng (TikTok, Facebook) minh
+                      bạch thuật toán, bổ sung tính năng bảo vệ, hạn chế cơ chế
+                      "cuộn vô hạn" (infinite scroll) giữ chân người dùng tiêu
+                      cực <span class="d-none">[cite: 394, 395]</span>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div
+                  id="vi-mo-2"
+                  class="content-card card anchor-offset h-100 border-0 shadow-sm bg-white"
+                >
+                  <div class="card-body">
+                    <h5
+                      class="sub-section-title mt-0"
+                      style="color: var(--purple-color)"
+                    >
+                      <i class="fas fa-broadcast-tower me-2"></i>2. Truyền thông
+                      định hướng
+                    </h5>
+                    <p class="mb-0">
+                      Đẩy mạnh chiến dịch lan tỏa lối sống lành mạnh, "Digital
+                      Detox" (Thải độc kỹ thuật số) để thay đổi nhận thức, giúp
+                      thế hệ trẻ làm chủ công nghệ thay vì ngược lại
+                      <span class="d-none">[cite: 396]</span>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="text-center">
+      <div class="container">
+        <h5 class="fw-bold mb-3">EduSolutions Framework</h5>
+        <p class="mb-0">
+          &copy; 2026 Đề Xuất Giải Pháp Nâng Cao Hiệu Quả Sử Dụng Mạng Xã Hội.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const submenus = document.querySelectorAll(".submenu");
+        const mainLinks = document.querySelectorAll(".main-nav-link");
+
+        const hideAllSubmenus = () => {
+          submenus.forEach((menu) => {
+            menu.style.display = "none";
+          });
+        };
+
+        mainLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            hideAllSubmenus();
+            const nextEl = link.nextElementSibling;
+            if (nextEl && nextEl.classList.contains("submenu")) {
+              nextEl.style.display = "flex";
+            }
+          });
+        });
+
+        const scrollSpyElement = document.body;
+        scrollSpyElement.addEventListener("activate.bs.scrollspy", (e) => {
+          const activeAnchor = e.target;
+
+          if (activeAnchor.classList.contains("main-nav-link")) {
+            hideAllSubmenus();
+            const nextEl = activeAnchor.nextElementSibling;
+            if (nextEl && nextEl.classList.contains("submenu")) {
+              nextEl.style.display = "flex";
+            }
+          } else if (activeAnchor.closest(".submenu")) {
+            hideAllSubmenus();
+            const parentSubmenu = activeAnchor.closest(".submenu");
+            parentSubmenu.style.display = "flex";
+            const parentMain = parentSubmenu.previousElementSibling;
+            if (parentMain) {
+              parentMain.classList.add("active");
+            }
+          }
+        });
+
+        setTimeout(() => {
+          const currentActive = document.querySelector(
+            ".sidebar .nav-link.active",
+          );
+          if (currentActive) {
+            if (currentActive.classList.contains("main-nav-link")) {
+              const nextEl = currentActive.nextElementSibling;
+              if (nextEl && nextEl.classList.contains("submenu"))
+                nextEl.style.display = "flex";
+            } else if (currentActive.closest(".submenu")) {
+              currentActive.closest(".submenu").style.display = "flex";
+            }
+          }
+        }, 300);
+
+        // Xử lý Hướng dẫn sử dụng (Tutorial Overlay)
+        const tutorialOverlay = document.getElementById("tutorialOverlay");
+        const closeBtn = document.getElementById("closeTutorialBtn");
+        const targetMenu = document.getElementById("tutorial-target-menu");
+
+        if (tutorialOverlay && closeBtn && targetMenu) {
+          targetMenu.classList.add("highlight-target");
+
+          closeBtn.addEventListener("click", () => {
+            tutorialOverlay.classList.add("hidden");
+            targetMenu.classList.remove("highlight-target");
+            if (targetMenu.getAttribute("href") === location.hash) {
+              targetMenu.classList.add("active");
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

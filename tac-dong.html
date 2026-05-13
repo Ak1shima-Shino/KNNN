@@ -1,0 +1,1561 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Báo Cáo Nghiên Cứu: Tác Động Mạng Xã Hội</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #34495e;
+        --accent-color: #007bff;
+        --success-color: #28a745;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --info-color: #17a2b8;
+        --purple-color: #6f42c1;
+        --bg-light: #f4f6f9;
+      }
+
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background-color: var(--bg-light);
+        color: #333;
+        line-height: 1.7;
+        position: relative;
+      }
+
+      /* Hero Header */
+      .hero-section {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 90px 0 60px;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .hero-title {
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Navbar */
+      .navbar-brand {
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      /* Sidebar & TOC */
+      .sidebar {
+        position: sticky;
+        top: 85px;
+        background: white;
+        padding: 25px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+      }
+
+      .sidebar h5 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
+
+      .nav-pills .nav-link {
+        color: var(--secondary-color);
+        border-radius: 6px;
+        margin-bottom: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        padding: 8px 15px;
+      }
+
+      .nav-pills .main-nav-link.active {
+        background-color: var(--accent-color);
+        color: white;
+        box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .nav-pills .nav-link:hover:not(.active) {
+        background-color: #e9ecef;
+        transform: translateX(3px);
+      }
+
+      /* Submenu Styling */
+      .submenu {
+        display: none; /* Hide by default, JS will toggle this */
+        margin-left: 15px;
+        border-left: 2px solid #e9ecef;
+        padding-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      .submenu .nav-link {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 5px 10px;
+        color: #6c757d;
+        border-radius: 4px;
+      }
+      .submenu .nav-link.active {
+        background-color: transparent;
+        color: var(--accent-color);
+        border-left: 3px solid var(--accent-color);
+        border-radius: 0;
+        padding-left: 15px;
+        font-weight: 700;
+      }
+
+      /* Card Elements */
+      .content-card {
+        background: white;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 35px;
+        overflow: hidden;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .content-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header-custom {
+        font-weight: 700;
+        padding: 16px 20px;
+        border-bottom: none;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        color: white;
+      }
+
+      .section-title {
+        border-bottom: 3px solid var(--accent-color);
+        padding-bottom: 10px;
+        margin-top: 40px;
+        margin-bottom: 25px;
+        color: var(--primary-color);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .sub-section-title {
+        color: var(--secondary-color);
+        font-weight: 700;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Chart / Progress Bar Wrapper */
+      .chart-container {
+        background: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .progress-wrapper {
+        margin-bottom: 15px;
+      }
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #495057;
+      }
+      .progress {
+        height: 14px;
+        border-radius: 8px;
+        background-color: #e9ecef;
+        overflow: visible;
+      }
+      .progress-bar {
+        border-radius: 8px;
+        position: relative;
+      }
+
+      /* Tooltip-like value on progress bar */
+      .progress-bar::after {
+        content: attr(data-val);
+        position: absolute;
+        right: 5px;
+        top: -1px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Color palettes for charts */
+      .bg-never {
+        background-color: var(--info-color) !important;
+      }
+      .bg-rarely {
+        background-color: var(--success-color) !important;
+      }
+      .bg-sometimes {
+        background-color: var(--warning-color) !important;
+      }
+      .bg-often {
+        background-color: #fd7e14 !important;
+      }
+      .bg-always {
+        background-color: var(--danger-color) !important;
+      }
+      .bg-neutral {
+        background-color: var(--purple-color) !important;
+      }
+
+      .stat-highlight {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--accent-color);
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: rgba(255, 255, 255, 0.8);
+        padding: 40px 0 20px;
+        margin-top: 60px;
+      }
+
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Spacer for fixed navbar anchor links */
+      .anchor-offset {
+        scroll-margin-top: 100px;
+      }
+
+      /* --- CSS cho màn hình Hướng dẫn (Tutorial Overlay) --- */
+      .tutorial-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75); /* Làm mờ nền đen 75% */
+        z-index: 9998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+      .tutorial-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .tutorial-box {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        z-index: 10000;
+        max-width: 400px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        margin-left: 250px; /* Đẩy sang phải một chút để không che mất Sidebar */
+      }
+      .highlight-target {
+        position: relative;
+        z-index: 9999 !important; /* Đẩy thẻ <a> này nổi lên trên lớp mờ */
+        background-color: white !important;
+        box-shadow:
+          0 0 0 6px rgba(255, 255, 255, 0.9),
+          0 0 20px rgba(0, 123, 255, 0.8) !important;
+        border-radius: 6px;
+        animation: pulse-highlight 2s infinite;
+      }
+      @keyframes pulse-highlight {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+
+  <body
+    data-bs-spy="scroll"
+    data-bs-target="#toc-sidebar"
+    data-bs-offset="120"
+    tabindex="0"
+  >
+    <div style="position: fixed; top: 80px; left: 20px; z-index: 10001">
+      <a
+        href="index.html"
+        class="btn btn-dark rounded-pill shadow-lg px-4 py-2 border-2 border-warning"
+        style="font-weight: bold; font-size: 0.9rem"
+      >
+        <i class="fas fa-home me-2"></i> TRANG CHỦ
+      </a>
+    </div>
+
+    <div class="tutorial-overlay" id="tutorialOverlay">
+      <div class="tutorial-box">
+        <h4 class="text-primary mb-3">
+          <i class="fas fa-hand-pointer me-2"></i>Hướng Dẫn Khám Phá
+        </h4>
+        <p class="text-muted mb-4">
+          Bạn có thể nhấn vào các mục chính như
+          <strong>"Tác Động Tiêu Cực"</strong> ở menu bên trái. Các mục con chi
+          tiết sẽ tự động mở ra để bạn dễ dàng theo dõi hơn nhé!
+        </p>
+        <button
+          class="btn btn-primary fw-bold px-5 rounded-pill"
+          id="closeTutorialBtn"
+        >
+          Đã hiểu!
+        </button>
+      </div>
+    </div>
+
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          ><i class="fas fa-chart-line me-2 text-primary"></i>EduReport</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#tong-quan">Tổng Quan</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#ly-luan">Cơ Sở Lý Luận</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tieu-cuc">Tác Động Tiêu Cực</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tich-cuc">Tác Động Tích Cực</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero-section text-center">
+      <div class="container">
+        <h1 class="display-4 hero-title mb-3">Tác Động Của Mạng Xã Hội</h1>
+        <p class="lead fw-light">
+          Phân tích toàn diện ảnh hưởng đa chiều đối với sinh viên trong kỷ
+          nguyên số.
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <aside class="col-lg-3 d-none d-lg-block">
+          <nav id="toc-sidebar" class="sidebar flex-column nav nav-pills">
+            <h5 class="text-uppercase fw-bold">
+              <i class="fas fa-list-ul me-2"></i>Mục Lục
+            </h5>
+
+            <a class="nav-link main-nav-link" href="#tong-quan">I. Tổng Quan</a>
+
+            <a class="nav-link main-nav-link" href="#ly-luan"
+              >II. Cơ Sở Lý Luận</a
+            >
+
+            <a
+              class="nav-link main-nav-link"
+              href="#tieu-cuc"
+              id="tutorial-target-menu"
+              >III. Tác Động Tiêu Cực</a
+            >
+            <div class="submenu nav flex-column" id="submenu-tieu-cuc">
+              <a class="nav-link" href="#tieu-cuc-1">1. Hiệu suất học tập</a>
+              <a class="nav-link" href="#tieu-cuc-2">2. Sức khỏe tâm lý</a>
+              <a class="nav-link" href="#tieu-cuc-3">3. Sức khỏe thể chất</a>
+              <a class="nav-link" href="#tieu-cuc-4">4. Mối quan hệ xã hội</a>
+              <a class="nav-link" href="#tieu-cuc-5"
+                >5. Nhận thức & Kiểm soát</a
+              >
+              <a class="nav-link" href="#tieu-cuc-6">6. An toàn thông tin</a>
+            </div>
+
+            <a class="nav-link main-nav-link" href="#tich-cuc"
+              >IV. Tác Động Tích Cực</a
+            >
+            <div class="submenu nav flex-column" id="submenu-tich-cuc">
+              <a class="nav-link" href="#tich-cuc-1">1. Hệ sinh thái Học tập</a>
+              <a class="nav-link" href="#tich-cuc-2"
+                >2. Networking Nghề nghiệp</a
+              >
+              <a class="nav-link" href="#tich-cuc-3">3. Cảm hứng & Kỷ luật</a>
+              <a class="nav-link" href="#tich-cuc-4"
+                >4. Kênh Thông tin & Giải trí</a
+              >
+              <a class="nav-link" href="#tich-cuc-5"
+                >5. Cầu nối Ảo - Thực (O2O)</a
+              >
+            </div>
+          </nav>
+        </aside>
+
+        <main class="col-lg-9">
+          <section id="tong-quan" class="anchor-offset mb-5">
+            <h2 class="section-title">
+              <i class="fas fa-eye text-primary me-2"></i>I. Tổng quan việc sử
+              dụng MXH
+            </h2>
+            <div class="content-card card">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-md-7">
+                    <div
+                      class="alert border-start border-primary border-4 bg-light shadow-sm"
+                    >
+                      <h5 class="text-primary">
+                        <i class="far fa-clock me-2"></i>Về thời lượng
+                      </h5>
+                      <p class="mb-0">
+                        Hơn <strong>80%</strong> sinh viên sử dụng MXH trên
+                        <span class="stat-highlight">2 giờ/ngày</span>, trong đó
+                        có đến <strong>30%</strong> sử dụng "Trên 6 giờ/ngày".
+                      </p>
+                    </div>
+                    <div
+                      class="alert border-start border-danger border-4 bg-light shadow-sm mt-3"
+                    >
+                      <h5 class="text-danger">
+                        <i class="fas fa-mobile-alt me-2"></i>Về hành vi
+                      </h5>
+                      <p class="mb-0">
+                        Hơn <strong>96%</strong> sinh viên có xu hướng mở MXH
+                        như một phản xạ tự nhiên khi rảnh rỗi (39,1% thường
+                        xuyên, 24,5% luôn luôn).
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-md-5 text-center">
+                    <img
+                      src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80"
+                      alt="Students"
+                      class="img-fluid rounded shadow-sm"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="ly-luan" class="anchor-offset mb-5">
+            <h2 class="section-title">
+              <i class="fas fa-book-open text-primary me-2"></i>II. Cơ Sở Lý
+              Luận
+            </h2>
+            <div class="accordion shadow-sm rounded" id="accordionTheories">
+              <div class="accordion-item border-0 border-bottom">
+                <h2 class="accordion-header" id="headingOne">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                  >
+                    <strong>1. Tâm lý học và Sinh lý học thần kinh</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse show"
+                  data-bs-parent="#accordionTheories"
+                >
+                  <div class="accordion-body bg-light">
+                    <p>
+                      <i class="fas fa-brain text-warning me-2"></i
+                      ><strong>Cơ chế Hormone Dopamine:</strong> Các nền tảng
+                      MXH được tinh chỉnh bằng thuật toán để tạo kích thích liên
+                      tục đối với khao khát dopamine thông qua thông báo và lượt
+                      tương tác. Quá trình này hình thành thói quen kiểm tra
+                      thiết bị vô thức.
+                    </p>
+                    <p>
+                      <i class="fas fa-moon text-secondary me-2"></i
+                      ><strong>Nhịp sinh học và Melatonin:</strong> Việc tiếp
+                      xúc kéo dài với màn hình ánh sáng xanh làm ức chế quá
+                      trình tổng hợp melatonin, gây ra hội chứng "sương mù não"
+                      (brain fog) và trạng thái kiệt sức vật lý.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item border-0 border-bottom">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                  >
+                    <strong>2. Thuyết So sánh Xã hội & Hành vi</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionTheories"
+                >
+                  <div class="accordion-body bg-light">
+                    <p>
+                      <strong>Áp lực đồng trang lứa:</strong> Người dùng có xu
+                      hướng tự đánh giá bản thân qua việc so sánh với hình ảnh
+                      "được hoàn hảo hóa" của người khác trên mạng, dễ kích hoạt
+                      cảm giác tự ti.
+                    </p>
+                    <p>
+                      <strong>Thoái hóa kỹ năng giao tiếp:</strong> Môi trường
+                      trực tuyến tước bỏ yếu tố phi ngôn ngữ, tạo vùng an toàn
+                      ảo, làm thui chột phản xạ giao tiếp đời thực
+                      (face-to-face).
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item border-0 border-bottom">
+                <h2 class="accordion-header" id="headingThree">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                  >
+                    <strong>3. Môi trường Truyền thông Số</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionTheories"
+                >
+                  <div class="accordion-body bg-light">
+                    <p>
+                      <strong>Hiệu ứng Buồng vang (Echo Chamber):</strong> Thuật
+                      toán phân phối có xu hướng cô lập cá nhân trong những
+                      "buồng vang" thông tin đồng điệu, làm xói mòn khả năng tư
+                      duy phản biện đa chiều.
+                    </p>
+                    <p>
+                      <strong>Dấu chân số:</strong> Mọi hành vi tương tác thiếu
+                      kiểm soát tạo thành dữ liệu cá nhân vĩnh viễn, định hình
+                      rủi ro về uy tín và nghề nghiệp.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="headingFour">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour"
+                  >
+                    <strong
+                      >4. Lý thuyết Mạng lưới và Xã hội hóa Học tập</strong
+                    >
+                  </button>
+                </h2>
+                <div
+                  id="collapseFour"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionTheories"
+                >
+                  <div class="accordion-body bg-light">
+                    <p>
+                      <strong>Học tập phi tập trung:</strong> MXH gỡ bỏ rào cản
+                      vật lý, cho phép sinh viên tiếp cận hệ sinh thái tri thức
+                      chủ động.
+                    </p>
+                    <p>
+                      <strong>Mô hình O2O (Online to Offline):</strong> Tương
+                      tác trực tuyến làm chất xúc tác tổ chức các hoạt động
+                      ngoại khóa, thể chất thực tế.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="tieu-cuc" class="anchor-offset mb-5">
+            <h2 class="section-title text-danger">
+              <i class="fas fa-exclamation-triangle me-2"></i>III. Chi Tiết Tác
+              Động Tiêu Cực
+            </h2>
+
+            <div id="tieu-cuc-1" class="content-card card anchor-offset">
+              <div class="card-header card-header-custom bg-danger">
+                1. Hiệu suất và hành vi học tập
+              </div>
+              <div class="card-body">
+                <h5 class="sub-section-title">
+                  <i class="fas fa-search-minus me-2"></i>1.1 Tình trạng xao
+                  nhãng
+                </h5>
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Bạn có thường bị mất tập trung khi học do MXH không?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Không bao giờ</span><span>7.3%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-never"
+                        style="width: 7.3%"
+                        data-val="7.3%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Hiếm khi</span><span>11.8%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-rarely"
+                        style="width: 11.8%"
+                        data-val="11.8%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng</span><span>42.7%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-sometimes"
+                        style="width: 42.7%"
+                        data-val="42.7%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên</span><span>32.7%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-often"
+                        style="width: 32.7%"
+                        data-val="32.7%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Có tới <strong>75,4%</strong> sinh viên thừa nhận MXH làm mất
+                  tập trung (32,7% thường xuyên + 42,7% thỉnh thoảng). Việc bị
+                  phân tâm khiến luồng tư duy logic bị ngắt quãng, tốn thêm thời
+                  gian bắt nhịp lại.
+                </p>
+
+                <hr class="text-muted opacity-25" />
+                <h5 class="sub-section-title">
+                  <i class="fas fa-history me-2"></i>1.2 Hội chứng trì hoãn
+                </h5>
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Bạn có từng trì hoãn việc học vì dùng MXH?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Không / Hiếm khi</span><span>30%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 30%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng</span><span>36.4%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-sometimes"
+                        style="width: 36.4%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên / Luôn luôn</span><span>33.6%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 33.6%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Khoảng <strong>33%</strong> sinh viên thường xuyên hoặc luôn
+                  luôn trì hoãn bài vở để lướt mạng, chứng tỏ bẫy tâm lý giữ
+                  chân người dùng của thuật toán quá hiệu quả.
+                </p>
+              </div>
+            </div>
+
+            <div id="tieu-cuc-2" class="content-card card anchor-offset">
+              <div class="card-header card-header-custom bg-danger">
+                2. Sức khỏe Tâm lý
+              </div>
+              <div class="card-body">
+                <h5 class="sub-section-title">
+                  <i class="fas fa-link me-2"></i>2.1 Hội chứng phụ thuộc
+                  (Nghiện MXH)
+                </h5>
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Bạn có khó kiểm soát thời gian (nghiện) MXH không?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Không</span><span>21.8%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-never"
+                        style="width: 21.8%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Có nhưng ít / Thỉnh thoảng</span><span>60.9%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-sometimes"
+                        style="width: 60.9%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên / Rất nghiêm trọng</span
+                      ><span>17.3%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-always"
+                        style="width: 17.3%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Gần <strong>80%</strong> sinh viên thừa nhận bản thân đang rơi
+                  vào trạng thái "nghiện" ở các mức độ khác nhau, dần trao quyền
+                  kiểm soát sự chú ý cho thuật toán.
+                </p>
+
+                <hr class="text-muted opacity-25" />
+                <h5 class="sub-section-title">
+                  <i class="fas fa-bolt me-2"></i>2.2 & 2.3 Cảm xúc bấp bênh &
+                  Dư chấn tiêu cực
+                </h5>
+                <p>
+                  Luồng thông tin hỗn tạp và bình luận độc hại trực tiếp thao
+                  túng cảm xúc. Có <strong>31,8%</strong> sinh viên bị ảnh hưởng
+                  mức "Trung bình" và <strong>13,6%</strong> bị ảnh hưởng
+                  "Nhiều" đến tâm trạng. Việc tiếp xúc với sự hoàn hảo giả tạo
+                  âm thầm kích hoạt áp lực đồng trang lứa.
+                </p>
+
+                <hr class="text-muted opacity-25" />
+                <h5 class="sub-section-title">
+                  <i class="fas fa-user-slash me-2"></i>2.4 Nỗi cô đơn ảo
+                </h5>
+                <p>
+                  Càng kết nối trực tuyến, càng dễ cô đơn. Có tới
+                  <strong>32,7%</strong> sinh viên "Thỉnh thoảng" và
+                  <strong>7,3%</strong> "Thường xuyên" cảm thấy buồn bã, trống
+                  rỗng sau khi tắt điện thoại.
+                </p>
+              </div>
+            </div>
+
+            <div id="tieu-cuc-3" class="content-card card anchor-offset">
+              <div class="card-header card-header-custom bg-danger">
+                3. Sức khỏe Thể chất
+              </div>
+              <div class="card-body">
+                <h5 class="sub-section-title">
+                  <i class="fas fa-bed me-2"></i>3.1 Hội chứng "Sương mù não" do
+                  thiếu ngủ
+                </h5>
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Bạn có dùng MXH trước khi ngủ không?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng</span><span>17.3%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 17.3%"
+                        data-val="17.3%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên</span><span>43.6%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-often"
+                        style="width: 43.6%"
+                        data-val="43.6%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Luôn luôn</span><span>29.1%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-always"
+                        style="width: 29.1%"
+                        data-val="29.1%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Tình trạng dùng điện thoại trước khi ngủ rất phổ biến. Ánh
+                  sáng xanh ức chế melatonin khiến hơn <strong>33%</strong> sinh
+                  viên đánh giá giấc ngủ bị ảnh hưởng nhiều đến rất nhiều (26,4%
+                  Nhiều, 7,3% Rất nhiều), sáng dậy não bộ hoạt động lờ đờ.
+                </p>
+
+                <hr class="text-muted opacity-25" />
+                <h5 class="sub-section-title">
+                  <i class="fas fa-battery-empty me-2"></i>3.2 Suy nhược và Kiệt
+                  sức
+                </h5>
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Bạn có cảm thấy mỏi mắt/đau đầu khi dùng lâu không?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Trung bình</span><span>38.2%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 38.2%"
+                        data-val="38.2%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Nhiều</span><span>22.7%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-often"
+                        style="width: 22.7%"
+                        data-val="22.7%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Rất nhiều</span><span>16.4%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-always"
+                        style="width: 16.4%"
+                        data-val="16.4%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Việc ngồi lì lướt điện thoại khiến cơ thể ì ạch. Khoảng
+                  <strong>60%</strong> sinh viên ghi nhận mỏi mắt, đau đầu từ
+                  mức trung bình đến rất nhiều. Đồng thời
+                  <strong>24,5%</strong> thừa nhận rơi vào trạng thái "Mệt mỏi"
+                  (kiệt sức) sau các phiên sử dụng kéo dài thay vì vận động thể
+                  chất.
+                </p>
+              </div>
+            </div>
+
+            <div id="tieu-cuc-4" class="content-card card anchor-offset">
+              <div class="card-header card-header-custom bg-danger">
+                4. Mối quan hệ Xã hội
+              </div>
+              <div class="card-body">
+                <h5 class="sub-section-title">
+                  <i class="fas fa-home me-2"></i>4.1 Sự xói mòn quan hệ cốt lõi
+                  (Gia đình)
+                </h5>
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Bạn có dành ít thời gian cho gia đình do MXH?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng</span><span>40.9%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-sometimes"
+                        style="width: 40.9%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên / Luôn luôn</span><span>27.3%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-often"
+                        style="width: 27.3%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Sự phân tâm làm giảm chất lượng những buổi trò chuyện gia
+                  đình, âm thầm tước đoạt thời gian dành cho người thân.
+                </p>
+
+                <h5 class="sub-section-title">
+                  <i class="fas fa-comments me-2"></i>4.2 Thui chột kỹ năng giao
+                  tiếp đời thực
+                </h5>
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Bạn có ưu tiên giao tiếp online hơn offline không?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng ưu tiên Online</span><span>44.5%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-info"
+                        style="width: 44.5%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên / Luôn luôn</span><span>32.7%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-purple"
+                        style="width: 32.7%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Lạm dụng vùng an toàn trực tuyến khiến giao tiếp face-to-face
+                  trở thành rào cản. Khoảng <strong>44,5%</strong> sinh viên cảm
+                  thấy giao tiếp ngoài đời khó khăn hơn do thói quen này.
+                </p>
+              </div>
+            </div>
+
+            <div
+              id="tieu-cuc-5"
+              class="content-card card anchor-offset border-danger border-2"
+            >
+              <div class="card-header card-header-custom bg-danger">
+                5. Nhận thức và Kiểm soát
+              </div>
+              <div class="card-body">
+                <h5 class="sub-section-title">
+                  <i class="fas fa-balance-scale me-2"></i>5.1 Nghịch lý của sự
+                  tự nhận thức & Ý chí bất lực
+                </h5>
+                <p>
+                  Sinh viên không hề thiếu hiểu biết trước sự xâm lấn của MXH;
+                  họ nhận diện rất rõ tình trạng "bội thực" kỹ thuật số của
+                  mình. Nhưng ranh giới giữa nhận thức và dứt bỏ là một khoảng
+                  cách lớn.
+                </p>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="chart-container h-100">
+                      <p class="text-muted fw-bold mb-3">
+                        Bạn có nghĩ mình dùng MXH quá nhiều?
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Không / Ít</span><span>30%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-success"
+                            style="width: 30%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Mức Đáng kể</span><span>40%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-warning"
+                            style="width: 40%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Mức Quá nhiều</span><span>23.6%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 23.6%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="chart-container h-100">
+                      <p class="text-muted fw-bold mb-3">
+                        Bạn có cố gắng giảm thời gian dùng không?
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Đang cố gắng</span><span>45.5%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-info"
+                            style="width: 45.5%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Có nhưng không thành công</span
+                          ><span>21.8%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 21.8%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Hiệu quả</span><span>30.9%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-success"
+                            style="width: 30.9%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3">
+                  Nghịch lý nằm ở chỗ hơn <strong>63%</strong> nhận ra bản thân
+                  lạm dụng, và 45.5% đang cố gắng cai nghiện, nhưng sức hút của
+                  thuật toán thường đánh bại ý chí (21,8% bất lực hoàn toàn).
+                </p>
+
+                <hr class="text-muted opacity-25" />
+                <h5 class="sub-section-title">
+                  <i class="fas fa-shield-alt me-2"></i>5.2 Sự thiếu hụt các rào
+                  cản phòng vệ
+                </h5>
+                <p>
+                  Để dứt bỏ thao túng, cần dựng lên rào cản cơ học. Tuy nhiên,
+                  có đến <strong>41,8%</strong> sinh viên hoàn toàn "Không" đặt
+                  giới hạn thời gian, và <strong>17,3%</strong> "Có đặt nhưng
+                  không tuân thủ".
+                </p>
+
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Phương pháp nào giúp kiểm soát tốt nhất? (Đánh giá từ SV)
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Lập kế hoạch học tập chi tiết</span
+                      ><span>36.4%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-primary"
+                        style="width: 36.4%"
+                        data-val="36.4%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Sử dụng App Giới hạn thời gian</span
+                      ><span>29.1%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-info"
+                        style="width: 29.1%"
+                        data-val="29.1%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Tắt thông báo (Notifications)</span
+                      ><span>16.4%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-secondary"
+                        style="width: 16.4%"
+                        data-val="16.4%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Dứt khoát Xóa ứng dụng</span><span>13.6%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 13.6%"
+                        data-val="13.6%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p>
+                  Sinh viên ưu tiên quản lý bản thân (lập kế hoạch) hơn là xóa
+                  bỏ công nghệ triệt để.
+                </p>
+              </div>
+            </div>
+
+            <div
+              id="tieu-cuc-6"
+              class="content-card card anchor-offset border-danger border-2"
+            >
+              <div class="card-header card-header-custom bg-danger">
+                6. Rủi ro An toàn Thông tin & Định hình Nhận thức
+              </div>
+              <div class="card-body">
+                <div class="alert alert-warning border-0 shadow-sm mb-4">
+                  <h5 class="text-danger">
+                    <i class="fas fa-user-secret me-2"></i>6.1 Bẫy lừa đảo trực
+                    tuyến & Rò rỉ dữ liệu
+                  </h5>
+                  <p class="mb-0">
+                    Lợi dụng nhu cầu tìm việc làm thêm, thuê trọ hay mua tài
+                    liệu giá rẻ, kẻ xấu thường giăng bẫy lừa đảo tinh vi. Thiếu
+                    màng lọc bảo mật khiến sinh viên đối mặt với thiệt hại tài
+                    chính và dễ bị đánh cắp danh tính qua các đường link độc
+                    hại, biến họ thành "con mồi" béo bở ngay trên nền tảng hằng
+                    ngày.
+                  </p>
+                </div>
+
+                <div class="alert alert-info border-0 shadow-sm mb-4">
+                  <h5 class="text-info">
+                    <i class="fas fa-bullhorn me-2"></i>6.2 Hiệu ứng Buồng vang
+                    & Xói mòn Tư duy Phản biện
+                  </h5>
+                  <p class="mb-0">
+                    Thuật toán chỉ hiển thị những nội dung đồng điệu với quan
+                    điểm sẵn có, vô tình nhốt sinh viên vào một “buồng vang
+                    thông tin” (Echo Chamber). Cơ chế này hạn chế góc nhìn đa
+                    chiều, làm thui chột tư duy phản biện logic và dẫn đến đánh
+                    giá phiến diện trước các vấn đề xã hội.
+                  </p>
+                </div>
+
+                <div class="alert alert-secondary border-0 shadow-sm">
+                  <h5 class="text-dark">
+                    <i class="fas fa-shoe-prints me-2"></i>6.3 Dấu chân số & Rủi
+                    ro Nghề nghiệp Tương lai
+                  </h5>
+                  <p class="mb-0">
+                    Sinh viên thường quên tính vĩnh viễn của "dấu chân số" khi
+                    tự do phát ngôn hay tranh cãi bốc đồng. Trong bối cảnh nhà
+                    tuyển dụng thường xuyên rà soát hồ sơ mạng xã hội của ứng
+                    viên, một phút thiếu kiểm soát hôm nay có thể tước đoạt cơ
+                    hội việc làm chuyên nghiệp trong tương lai.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="tich-cuc" class="anchor-offset mb-5">
+            <h2 class="section-title text-success">
+              <i class="fas fa-check-circle me-2"></i>IV. Chi Tiết Tác Động Tích
+              Cực
+            </h2>
+
+            <div id="tich-cuc-1" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-graduation-cap me-2"></i>1. Hệ sinh thái Học
+                  tập Phi tập trung
+                </h5>
+                <p>
+                  MXH đã phá vỡ rào cản của giảng đường truyền thống, tạo ra các
+                  "hub" tri thức không giới hạn. Có <strong>43,6%</strong> đánh
+                  giá giúp ích "Khá nhiều" và <strong>20,9%</strong> đánh giá
+                  "Rất nhiều" trong việc học.
+                </p>
+
+                <div class="chart-container bg-white border-success">
+                  <p class="text-success fw-bold mb-3">
+                    Bạn có dùng MXH để tìm tài liệu học tập không?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên tìm tài liệu</span><span>41.8%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 41.8%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Luôn luôn tìm tài liệu</span><span>18.2%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-info"
+                        style="width: 18.2%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thỉnh thoảng</span><span>31.8%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 31.8%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="mb-0 text-muted">
+                  Thực tế, có trọn vẹn 60% sinh viên duy trì thói quen tra cứu
+                  tài liệu học tập miễn phí trên nền tảng mạng.
+                </p>
+              </div>
+            </div>
+
+            <div id="tich-cuc-2" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-users me-2"></i>2. Cộng đồng Chuyên môn &
+                  Networking Nghề nghiệp
+                </h5>
+                <p>
+                  Việc tham gia hội nhóm chuyên môn (lập trình, ngoại ngữ...) là
+                  xu hướng thiết yếu với <strong>77,2%</strong> sinh viên tham
+                  gia tương tác. Đây là bệ phóng xây dựng thương hiệu cá nhân.
+                </p>
+
+                <div class="chart-container bg-white border-success">
+                  <p class="text-success fw-bold mb-3">
+                    Hiệu quả kết nối bạn bè, đối tác qua MXH?
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Rất hiệu quả</span><span>35.5%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 35.5%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Khá hiệu quả</span><span>29.1%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-primary"
+                        style="width: 29.1%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="tich-cuc-3" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-fire me-2"></i>3. Nguồn Cảm hứng và Động lực
+                  Kỷ luật (Peer Motivation)
+                </h5>
+                <p class="mb-0">
+                  Trái với áp lực tiêu cực, MXH cũng tạo ra trào lưu tốt như
+                  "Studygram", "Study with me" hay theo dõi các kỳ thi lớn. Việc
+                  theo dõi những sinh viên xuất sắc biến sự ghen tị thành động
+                  lực học hỏi, thôi thúc sinh viên đặt mục tiêu (ví dụ: thi
+                  chứng chỉ, lọt top các kỳ thi) và duy trì sự bền bỉ.
+                </p>
+              </div>
+            </div>
+
+            <div id="tich-cuc-4" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-newspaper me-2"></i>4. Kênh Cập nhật Thông
+                  tin và Thư giãn Vi mô
+                </h5>
+                <div
+                  class="chart-container bg-white border-success float-md-end ms-md-4 mb-3 w-100"
+                  style="max-width: 400px"
+                >
+                  <p class="text-success fw-bold mb-3">
+                    Mục đích chính dùng MXH:
+                  </p>
+                  <div
+                    class="d-flex justify-content-between border-bottom py-1"
+                  >
+                    <span>Giải trí</span> <strong>64.5%</strong>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between border-bottom py-1"
+                  >
+                    <span>Giao tiếp</span> <strong>12.7%</strong>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between border-bottom py-1"
+                  >
+                    <span>Tin tức</span> <strong>11.8%</strong>
+                  </div>
+                  <div class="d-flex justify-content-between py-1">
+                    <span>Học tập</span> <strong>9.1%</strong>
+                  </div>
+                </div>
+                <p>
+                  Với <strong>64,5%</strong> lựa chọn "Giải trí", mạng xã hội
+                  đóng vai trò cơ chế phục hồi năng lượng tức thời
+                  (Micro-relaxation). Những nội dung hài hước ngắn giúp não bộ
+                  tạm ngắt kết nối với áp lực tư duy căng thẳng, phục hồi trạng
+                  thái để tiếp tục học. Đồng thời, đây là kênh cập nhật thông
+                  báo trường lớp nhanh nhất.
+                </p>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+
+            <div id="tich-cuc-5" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-running me-2"></i>5. Cầu nối Ảo - Thực (O2O:
+                  Online to Offline)
+                </h5>
+                <p class="mb-0">
+                  Một điểm cộng lớn là khả năng dùng không gian mạng để thúc đẩy
+                  hoạt động thể chất thực tế. Sinh viên tận dụng các hội nhóm
+                  địa phương để tìm kèo đánh cầu lông, tham gia CLB cờ vua, cờ
+                  caro, hoặc các hội chia sẻ kiến thức dinh dưỡng. Ở đây, MXH
+                  đóng vai trò "trạm trung chuyển" đưa người dùng rời khỏi màn
+                  hình hòa nhập vào đời thực.
+                </p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="text-center">
+      <div class="container">
+        <h5 class="fw-bold mb-3">EduReport Analytics</h5>
+        <p class="mb-0">
+          &copy; 2026 Báo cáo Tổng hợp: Sinh viên & Mạng xã hội. Giao diện thiết
+          kế bằng Bootstrap 5.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /**
+       * Custom JavaScript for Sidebar TOC (Table of Contents)
+       * - Only shows 4 main titles initially.
+       * - Expands submenus only when user clicks or scrolls to the respective main section.
+       */
+      document.addEventListener("DOMContentLoaded", () => {
+        const submenus = document.querySelectorAll(".submenu");
+        const mainLinks = document.querySelectorAll(".main-nav-link");
+
+        // Helper function to hide all submenus
+        const hideAllSubmenus = () => {
+          submenus.forEach((menu) => {
+            menu.style.display = "none";
+          });
+        };
+
+        // 1. CLICK EVENT on main headers to manually open submenu
+        mainLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            // Hide all first
+            hideAllSubmenus();
+            // Show the one right after the clicked link if it is a submenu
+            const nextEl = link.nextElementSibling;
+            if (nextEl && nextEl.classList.contains("submenu")) {
+              nextEl.style.display = "flex";
+            }
+          });
+        });
+
+        // 2. SCROLLSPY EVENT to auto-expand submenu while scrolling
+        const scrollSpyElement = document.body;
+        scrollSpyElement.addEventListener("activate.bs.scrollspy", (e) => {
+          const activeAnchor = e.target; // The <a> tag that Bootstrap just marked as active
+
+          // Check if the newly active link is a MAIN link
+          if (activeAnchor.classList.contains("main-nav-link")) {
+            hideAllSubmenus();
+            const nextEl = activeAnchor.nextElementSibling;
+            if (nextEl && nextEl.classList.contains("submenu")) {
+              nextEl.style.display = "flex";
+            }
+          }
+          // Else if the newly active link is INSIDE a submenu
+          else if (activeAnchor.closest(".submenu")) {
+            hideAllSubmenus();
+            const parentSubmenu = activeAnchor.closest(".submenu");
+            parentSubmenu.style.display = "flex"; // Keep it open
+
+            // Optional: also visually highlight the main parent link
+            const parentMain = parentSubmenu.previousElementSibling;
+            if (parentMain) {
+              // Bootstrap handles its own .active, but we ensure the parent looks bold/active too
+              parentMain.classList.add("active");
+            }
+          }
+        });
+
+        // Initial trigger to open submenu if the page loads halfway down
+        setTimeout(() => {
+          const currentActive = document.querySelector(
+            ".sidebar .nav-link.active",
+          );
+          if (currentActive) {
+            if (currentActive.classList.contains("main-nav-link")) {
+              const nextEl = currentActive.nextElementSibling;
+              if (nextEl && nextEl.classList.contains("submenu"))
+                nextEl.style.display = "flex";
+            } else if (currentActive.closest(".submenu")) {
+              currentActive.closest(".submenu").style.display = "flex";
+            }
+          }
+        }, 300);
+      });
+
+      // Xử lý Hướng dẫn sử dụng (Tutorial Overlay)
+      const tutorialOverlay = document.getElementById("tutorialOverlay");
+      const closeBtn = document.getElementById("closeTutorialBtn");
+      const targetMenu = document.getElementById("tutorial-target-menu");
+
+      // Khi trang web tải xong, tự động làm nổi bật mục tiêu
+      if (tutorialOverlay && closeBtn && targetMenu) {
+        targetMenu.classList.add("highlight-target");
+
+        // Khi người dùng bấm "Đã hiểu", xóa overlay và xóa highlight
+        closeBtn.addEventListener("click", () => {
+          tutorialOverlay.classList.add("hidden");
+          targetMenu.classList.remove("highlight-target");
+
+          // Trả lại trạng thái active bình thường của mục lục nếu nó đang được chọn
+          if (targetMenu.getAttribute("href") === location.hash) {
+            targetMenu.classList.add("active");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

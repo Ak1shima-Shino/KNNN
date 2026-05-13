@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Báo Cáo Đồ Án Cuối Kỳ: Ảnh Hưởng Của Mạng Xã Hội</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #0f2027;
+        --secondary-color: #203a43;
+        --accent-color: #2c5364;
+        --btn-gold: #fdbb2d;
+        --text-light: #f8f9fa;
+      }
+
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+        overflow-x: hidden;
+      }
+
+      /* Navbar Glassmorphism */
+      .navbar {
+        background: rgba(15, 32, 39, 0.9) !important;
+        backdrop-filter: blur(10px);
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .navbar-brand {
+        font-weight: 800;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Hero Header */
+      .hero-header {
+        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+        color: white;
+        padding: 180px 0 100px;
+        text-align: center;
+        clip-path: ellipse(150% 100% at 50% 0%);
+      }
+      .hero-title {
+        font-weight: 900;
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        background: linear-gradient(to right, #fff, #fdbb2d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Main Content Cards */
+      .category-section {
+        margin-top: -50px;
+        padding-bottom: 80px;
+      }
+      .nav-card {
+        background: white;
+        border-radius: 20px;
+        border: none;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+      }
+      .nav-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+      }
+      .card-img-top-custom {
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3.5rem;
+        color: white;
+      }
+
+      .grad-1 {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      }
+      .grad-2 {
+        background: linear-gradient(135deg, #373b44 0%, #4286f4 100%);
+      }
+      .grad-3 {
+        background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+      }
+      .grad-4 {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      }
+
+      .card-body {
+        flex: 1;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .card-title {
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+      }
+      .card-text {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 25px;
+      }
+      .btn-report {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: all 0.3s;
+        letter-spacing: 1px;
+        width: 100%;
+      }
+      .btn-report:hover {
+        background: var(--btn-gold);
+        color: var(--primary-color);
+        transform: scale(1.02);
+      }
+
+      /* Stats Section Overview */
+      .overview-section {
+        padding: 60px 0 20px;
+      }
+      .stat-box {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        height: 100%;
+      }
+      .stat-num {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--accent-color);
+      }
+
+      /* --- Floating Guide (Toast) --- */
+      .guide-toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: white;
+        border-left: 6px solid var(--btn-gold);
+        padding: 20px 25px;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        z-index: 10000;
+        max-width: 350px;
+        transform: translateX(150%); /* Giấu ra ngoài màn hình */
+        transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .guide-toast.show {
+        transform: translateX(0); /* Trượt vào trong màn hình */
+      }
+
+      footer {
+        background: var(--primary-color);
+        color: white;
+        padding: 60px 0 30px;
+        text-align: center;
+        margin-top: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="guide-toast" id="guideToast">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="text-primary fw-bold mb-0">
+          <i class="fas fa-lightbulb text-warning me-2"></i>Hướng Dẫn
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          id="closeGuideBtn"
+          aria-label="Close"
+        ></button>
+      </div>
+      <p class="text-muted small mb-0">
+        Cuộn xuống dưới và nhấn vào các nút <strong>"Xem Chi Tiết"</strong> ở
+        từng mục để đọc báo cáo đồ án bạn nhé!
+      </p>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <i class="fas fa-graduation-cap me-2 text-warning"></i>Báo Cáo Đồ Án
+        </a>
+      </div>
+    </nav>
+
+    <header class="hero-header">
+      <div class="container">
+        <h1 class="hero-title">
+          Ảnh Hưởng Của Mạng Xã Hội<br />Đối Với Sinh Viên
+        </h1>
+        <p class="lead text-white-50">
+          PHÂN TÍCH THỰC TRẠNG - NGUYÊN NHÂN - TÁC ĐỘNG - GIẢI PHÁP
+        </p>
+      </div>
+    </header>
+
+    <div class="container overview-section">
+      <div class="row g-4 justify-content-center mb-5">
+        <div class="col-md-4">
+          <div class="stat-box">
+            <div class="stat-num">110</div>
+            <div class="text-muted fw-bold">Mẫu Khảo Sát Thực Tế</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-box">
+            <div class="stat-num">04</div>
+            <div class="text-muted fw-bold">Danh Mục Nghiên Cứu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container category-section">
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-3">
+          <div class="nav-card h-100">
+            <div class="card-img-top-custom grad-1">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+            <div class="card-body">
+              <div>
+                <h4 class="card-title">Thực Trạng Khảo Sát</h4>
+                <p class="card-text">
+                  Dữ liệu thực tế từ 110 mẫu khảo sát về thói quen sử dụng của
+                  sinh viên hiện nay.
+                </p>
+              </div>
+              <a href="khao-sat.html" class="btn btn-report shadow-sm"
+                >Xem Chi Tiết</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="nav-card h-100">
+            <div class="card-img-top-custom grad-2">
+              <i class="fas fa-fingerprint"></i>
+            </div>
+            <div class="card-body">
+              <div>
+                <h4 class="card-title">Nguyên Nhân Sử Dụng</h4>
+                <p class="card-text">
+                  Phân tích các động cơ tâm lý và nhu cầu xã hội thúc đẩy sinh
+                  viên tham gia MXH.
+                </p>
+              </div>
+              <a href="nguyen-nhan.html" class="btn btn-report shadow-sm"
+                >Xem Chi Tiết</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="nav-card h-100">
+            <div class="card-img-top-custom grad-3">
+              <i class="fas fa-radiation-alt"></i>
+            </div>
+            <div class="card-body">
+              <div>
+                <h4 class="card-title">Ảnh Hưởng Tác Động</h4>
+                <p class="card-text">
+                  Đánh giá hệ lụy tiêu cực và lợi ích tích cực của MXH đến đời
+                  sống sinh viên.
+                </p>
+              </div>
+              <a href="tac-dong.html" class="btn btn-report shadow-sm"
+                >Xem Chi Tiết</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="nav-card h-100">
+            <div class="card-img-top-custom grad-4">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="card-body">
+              <div>
+                <h4 class="card-title">Đề Xuất Giải Pháp</h4>
+                <p class="card-text">
+                  Hệ thống các phương pháp giúp sinh viên cân bằng và tối ưu hóa
+                  việc dùng MXH.
+                </p>
+              </div>
+              <a href="giai-phap.html" class="btn btn-report shadow-sm"
+                >Xem Chi Tiết</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <h3 class="fw-bold mb-4">BÁO CÁO ĐỒ ÁN CUỐI KỲ</h3>
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-5">
+            <p class="small text-white-50">Được thực hiện bởi nhóm 8</p>
+          </div>
+        </div>
+        <p class="small opacity-50">
+          &copy; 2026 Toàn bộ dữ liệu dựa trên kết quả khảo sát thực tế.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const guideToast = document.getElementById("guideToast");
+        const closeBtn = document.getElementById("closeGuideBtn");
+
+        // ĐỔI SANG DÙNG localStorage ĐỂ TRÌNH DUYỆT NHỚ VĨNH VIỄN
+        const hasSeenTutorial = localStorage.getItem("tutorialSeen");
+
+        // Nếu chưa xem (tức là lần đầu vào trang), sau 1 giây sẽ trượt ra
+        if (hasSeenTutorial !== "true" && guideToast) {
+          setTimeout(() => {
+            guideToast.classList.add("show");
+          }, 1000);
+        }
+
+        // Xử lý khi nhấn nút Tắt (X)
+        if (closeBtn && guideToast) {
+          closeBtn.addEventListener("click", () => {
+            guideToast.classList.remove("show");
+
+            // GHI VÀO BỘ NHỚ LÀ ĐÃ XEM
+            localStorage.setItem("tutorialSeen", "true");
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

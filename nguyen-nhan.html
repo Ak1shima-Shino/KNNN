@@ -1,0 +1,1168 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Báo Cáo Nghiên Cứu: Nguyên Nhân Sử Dụng Mạng Xã Hội</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #34495e;
+        --accent-color: #007bff;
+        --success-color: #28a745;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --info-color: #17a2b8;
+        --purple-color: #6f42c1;
+        --bg-light: #f4f6f9;
+      }
+
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background-color: var(--bg-light);
+        color: #333;
+        line-height: 1.7;
+        position: relative;
+      }
+
+      /* --- CSS Màn hình Hướng dẫn (Tutorial Overlay) --- */
+      .tutorial-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 9998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+      .tutorial-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .tutorial-box {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        z-index: 10000;
+        max-width: 400px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        margin-left: 250px;
+      }
+      .highlight-target {
+        position: relative;
+        z-index: 9999 !important;
+        background-color: white !important;
+        box-shadow:
+          0 0 0 6px rgba(255, 255, 255, 0.9),
+          0 0 20px rgba(0, 123, 255, 0.8) !important;
+        border-radius: 6px;
+        animation: pulse-highlight 2s infinite;
+      }
+      @keyframes pulse-highlight {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Hero Header */
+      .hero-section {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 90px 0 60px;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .hero-title {
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Navbar */
+      .navbar-brand {
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      /* Sidebar & TOC */
+      .sidebar {
+        position: sticky;
+        top: 85px;
+        background: white;
+        padding: 25px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+      }
+
+      .sidebar h5 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+      }
+
+      .nav-pills .nav-link {
+        color: var(--secondary-color);
+        border-radius: 6px;
+        margin-bottom: 5px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        padding: 8px 15px;
+      }
+
+      .nav-pills .main-nav-link.active {
+        background-color: var(--accent-color);
+        color: white;
+        box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+      }
+
+      .nav-pills .nav-link:hover:not(.active) {
+        background-color: #e9ecef;
+        transform: translateX(3px);
+      }
+
+      /* Submenu Styling */
+      .submenu {
+        display: none;
+        margin-left: 15px;
+        border-left: 2px solid #e9ecef;
+        padding-left: 5px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      .submenu .nav-link {
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 5px 10px;
+        color: #6c757d;
+        border-radius: 4px;
+      }
+      .submenu .nav-link.active {
+        background-color: transparent;
+        color: var(--accent-color);
+        border-left: 3px solid var(--accent-color);
+        border-radius: 0;
+        padding-left: 15px;
+        font-weight: 700;
+      }
+
+      /* Card Elements */
+      .content-card {
+        background: white;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 35px;
+        overflow: hidden;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .content-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header-custom {
+        font-weight: 700;
+        padding: 16px 20px;
+        border-bottom: none;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        color: white;
+      }
+
+      .section-title {
+        border-bottom: 3px solid var(--accent-color);
+        padding-bottom: 10px;
+        margin-top: 40px;
+        margin-bottom: 25px;
+        color: var(--primary-color);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .sub-section-title {
+        color: var(--secondary-color);
+        font-weight: 700;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Chart / Progress Bar Wrapper */
+      .chart-container {
+        background: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .progress-wrapper {
+        margin-bottom: 15px;
+      }
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #495057;
+      }
+      .progress {
+        height: 14px;
+        border-radius: 8px;
+        background-color: #e9ecef;
+        overflow: visible;
+      }
+      .progress-bar {
+        border-radius: 8px;
+        position: relative;
+      }
+
+      .progress-bar::after {
+        content: attr(data-val);
+        position: absolute;
+        right: 5px;
+        top: -1px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+      }
+
+      .bg-never {
+        background-color: var(--info-color) !important;
+      }
+      .bg-rarely {
+        background-color: var(--success-color) !important;
+      }
+      .bg-sometimes {
+        background-color: var(--warning-color) !important;
+      }
+      .bg-often {
+        background-color: #fd7e14 !important;
+      }
+      .bg-always {
+        background-color: var(--danger-color) !important;
+      }
+      .bg-neutral {
+        background-color: var(--purple-color) !important;
+      }
+
+      .stat-highlight {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--accent-color);
+      }
+
+      footer {
+        background-color: var(--primary-color);
+        color: rgba(255, 255, 255, 0.8);
+        padding: 40px 0 20px;
+        margin-top: 60px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+      .anchor-offset {
+        scroll-margin-top: 100px;
+      }
+    </style>
+  </head>
+
+  <body
+    data-bs-spy="scroll"
+    data-bs-target="#toc-sidebar"
+    data-bs-offset="120"
+    tabindex="0"
+  >
+    <div style="position: fixed; top: 80px; left: 20px; z-index: 10001">
+      <a
+        href="index.html"
+        class="btn btn-dark rounded-pill shadow-lg px-4 py-2 border-2 border-warning"
+        style="font-weight: bold; font-size: 0.9rem"
+      >
+        <i class="fas fa-home me-2"></i> TRANG CHỦ
+      </a>
+    </div>
+
+    <div class="tutorial-overlay" id="tutorialOverlay">
+      <div class="tutorial-box">
+        <h4 class="text-primary mb-3">
+          <i class="fas fa-hand-pointer me-2"></i>Hướng Dẫn Khám Phá
+        </h4>
+        <p class="text-muted mb-4">
+          Bạn có thể nhấn vào các mục chính như
+          <strong>"Khía Cạnh Tâm Lý"</strong> ở menu bên trái. Các mục con chi
+          tiết sẽ tự động mở ra để bạn dễ dàng theo dõi chuyên sâu hơn nhé!
+        </p>
+        <button
+          class="btn btn-primary fw-bold px-5 rounded-pill"
+          id="closeTutorialBtn"
+        >
+          Đã hiểu!
+        </button>
+      </div>
+    </div>
+
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          ><i class="fas fa-chart-line me-2 text-primary"></i>EduReport</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#tong-quan">Tổng Quan</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#ly-luan">Cơ Sở Lý Luận</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tam-ly">Khía Cạnh Tâm Lý</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#xa-hoi">Khía Cạnh Xã Hội</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#nhu-cau">Khía Cạnh Nhu Cầu</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero-section text-center">
+      <div class="container">
+        <h1 class="display-4 hero-title mb-3">Nguyên Nhân Sử Dụng MXH</h1>
+        <p class="lead fw-light">
+          Tổng hợp lý thuyết và phân tích số liệu khảo sát chuyên sâu của sinh
+          viên.
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <aside class="col-lg-3 d-none d-lg-block">
+          <nav id="toc-sidebar" class="sidebar flex-column nav nav-pills">
+            <h5 class="text-uppercase fw-bold">
+              <i class="fas fa-list-ul me-2"></i>Mục Lục
+            </h5>
+
+            <a class="nav-link main-nav-link" href="#tong-quan"
+              >I. Đánh Giá Tổng Quan</a
+            >
+
+            <a class="nav-link main-nav-link" href="#ly-luan"
+              >II. Cơ Sở Lý Luận</a
+            >
+
+            <a
+              class="nav-link main-nav-link"
+              href="#tam-ly"
+              id="tutorial-target-menu"
+              >III. Khía Cạnh Tâm Lý</a
+            >
+            <div class="submenu nav flex-column" id="submenu-tam-ly">
+              <a class="nav-link" href="#tam-ly-1">1. Nhu cầu công nhận</a>
+              <a class="nav-link" href="#tam-ly-2">2. Tâm lý FOMO</a>
+              <a class="nav-link" href="#tam-ly-3">3. Cơ chế Dopamine</a>
+            </div>
+
+            <a class="nav-link main-nav-link" href="#xa-hoi"
+              >IV. Khía Cạnh Xã Hội</a
+            >
+            <div class="submenu nav flex-column" id="submenu-xa-hoi">
+              <a class="nav-link" href="#xa-hoi-1">1. Áp lực tuân thủ</a>
+              <a class="nav-link" href="#xa-hoi-2"
+                >2. Kênh thông tin học thuật</a
+              >
+              <a class="nav-link" href="#xa-hoi-3">3. So sánh xã hội</a>
+            </div>
+
+            <a class="nav-link main-nav-link" href="#nhu-cau"
+              >V. Khía Cạnh Nhu Cầu</a
+            >
+            <div class="submenu nav flex-column" id="submenu-nhu-cau">
+              <a class="nav-link" href="#nhu-cau-1">1. Hỗ trợ học tập</a>
+              <a class="nav-link" href="#nhu-cau-2"
+                >2. Định hướng nghề nghiệp</a
+              >
+              <a class="nav-link" href="#nhu-cau-3">3. Giải trí và phục hồi</a>
+            </div>
+          </nav>
+        </aside>
+
+        <main class="col-lg-9">
+          <section id="tong-quan" class="anchor-offset mb-5">
+            <h2 class="section-title">
+              <i class="fas fa-eye text-primary me-2"></i>I. Đánh Giá Tổng Quan
+            </h2>
+            <div class="content-card card">
+              <div class="card-body">
+                <p class="mb-3">
+                  Nhìn chung, việc nhiều sinh viên hiện nay sử dụng mạng xã hội
+                  đến từ rất nhiều nguyên nhân, từ nhu cầu cơ bản của con người
+                  cho tới những sự tác động có chủ đích từ các ứng dụng hiện
+                  đại. Với sự phát triển mạnh mẽ và không ngừng của xã hội ngày
+                  nay, điều này là không thể tránh khỏi.<span class="d-none"
+                    >[cite: 703]</span
+                  >
+                </p>
+                <div
+                  class="alert border-start border-primary border-4 bg-light shadow-sm"
+                >
+                  <p class="mb-0">
+                    Để có thể quản lý và phát triển bản thân song song với sự
+                    phát triển của công nghệ, sinh viên cần phải tự chủ động
+                    trong việc quản lý thời gian sử dụng không gian mạng, tránh
+                    để ảnh hưởng quá nhiều tới sức khỏe tinh thần của bản thân
+                    cũng như biết cách tận dụng các nguồn tài nguyên lớn mạnh từ
+                    Internet để hỗ trợ trong công việc và học tập.<span
+                      class="d-none"
+                      >[cite: 703]</span
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="ly-luan" class="anchor-offset mb-5">
+            <h2 class="section-title">
+              <i class="fas fa-book-open text-primary me-2"></i>II. Cơ Sở Lý
+              Luận Nền Tảng
+            </h2>
+            <div class="accordion shadow-sm rounded" id="accordionTheories">
+              <div class="accordion-item border-0 border-bottom">
+                <h2 class="accordion-header" id="headingOne">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                  >
+                    <strong>1. Các Khái Niệm Cơ Bản</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse show"
+                  data-bs-parent="#accordionTheories"
+                >
+                  <div class="accordion-body bg-light">
+                    <p>
+                      <strong>Mạng xã hội:</strong> Là nền tảng trực tuyến cho
+                      phép người dùng tạo hồ sơ cá nhân, kết nối, chia sẻ nội
+                      dung (ảnh, video, văn bản) và tương tác. Một số nền tảng
+                      phổ biến: Facebook, TikTok, Instagram, YouTube, Zalo.<span
+                        class="d-none"
+                        >[cite: 703]</span
+                      >
+                    </p>
+                    <p>
+                      <strong>Sinh viên:</strong> Nhóm đối tượng (18-24 tuổi)
+                      đang hình thành bản sắc cá nhân, có nhu cầu cao về khẳng
+                      định bản thân và kết nối xã hội.<span class="d-none"
+                        >[cite: 703]</span
+                      >
+                    </p>
+                    <p>
+                      <strong>Nghiện mạng xã hội:</strong> Tình trạng sử dụng
+                      quá mức, mất kiểm soát, gây ảnh hưởng công việc, học tập.
+                      Đây là dạng lệ thuộc hành vi giống rối loạn tâm lý.<span
+                        class="d-none"
+                        >[cite: 703]</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item border-0 border-bottom">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                  >
+                    <strong
+                      >2. Lý thuyết Sử dụng, Thỏa mãn & So sánh xã hội</strong
+                    >
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionTheories"
+                >
+                  <div class="accordion-body bg-light">
+                    <p>
+                      <strong>Lý thuyết sử dụng và thỏa mãn:</strong> Người dùng
+                      chủ động lựa chọn phương tiện truyền thông dựa trên nhu
+                      cầu cá nhân nhằm tìm kiếm sự thỏa mãn (thông tin, giải
+                      trí, kết nối, khẳng định bản thân).<span class="d-none"
+                        >[cite: 703]</span
+                      >
+                    </p>
+                    <p>
+                      <strong>Lý thuyết so sánh xã hội (Festinger):</strong> Con
+                      người tự đánh giá bản thân bằng cách so sánh với người
+                      xung quanh. Trên MXH, xu hướng này bị khuếch đại dẫn đến
+                      cảm giác tự ti và áp lực.<span class="d-none"
+                        >[cite: 703]</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item border-0 border-bottom">
+                <h2 class="accordion-header" id="headingThree">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                  >
+                    <strong
+                      >3. Lý thuyết Củng cố hành vi & Cơ chế Dopamine</strong
+                    >
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionTheories"
+                >
+                  <div class="accordion-body bg-light">
+                    <p>
+                      Dựa trên nguyên lý củng cố ngẫu nhiên của B.F. Skinner,
+                      các nền tảng MXH thiết kế để cung cấp “phần thưởng ngẫu
+                      nhiên” kích thích não bộ tiết dopamine, tạo vòng lặp hành
+                      vi gây nghiện. Mỗi tương tác tạo cảm giác thỏa mãn ngắn
+                      hạn dẫn đến hành vi khó kiểm soát.<span class="d-none"
+                        >[cite: 703]</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item border-0">
+                <h2 class="accordion-header" id="headingFour">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour"
+                  >
+                    <strong>4. Hội chứng FOMO & Nhu cầu được công nhận</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseFour"
+                  class="accordion-collapse collapse"
+                  data-bs-parent="#accordionTheories"
+                >
+                  <div class="accordion-body bg-light">
+                    <p>
+                      <strong>FOMO:</strong> Trạng thái lo âu khi cá nhân nhận
+                      thức đang bỏ lỡ trải nghiệm. Điều này tạo áp lực duy trì
+                      trạng thái trực tuyến liên tục để không bị tách biệt khỏi
+                      nhóm bạn bè.<span class="d-none">[cite: 703]</span>
+                    </p>
+                    <p>
+                      <strong>Lý thuyết nhu cầu được công nhận:</strong> Nhu cầu
+                      được người khác thừa nhận có mối liên hệ chặt chẽ với hành
+                      vi sử dụng MXH ở độ tuổi 18-24. MXH cung cấp cơ chế thỏa
+                      mãn tức thì thông qua lượt thích, bình luận.<span
+                        class="d-none"
+                        >[cite: 703]</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="tam-ly" class="anchor-offset mb-5">
+            <h2 class="section-title text-danger">
+              <i class="fas fa-brain me-2"></i>III. Khía Cạnh Tâm Lý
+            </h2>
+
+            <div id="tam-ly-1" class="content-card card anchor-offset">
+              <div class="card-header card-header-custom bg-danger">
+                1. Nhu cầu được công nhận và khẳng định bản thân
+              </div>
+              <div class="card-body">
+                <p>
+                  Ở độ tuổi trưởng thành, người trẻ có xu hướng thể hiện cá
+                  tính. Mạng xã hội trở thành môi trường để khẳng định giá trị
+                  bản thân thông qua lượt thích, bình luận. Hành vi liên tục
+                  kiểm tra lượt tương tác chính là để thỏa mãn cảm giác được
+                  công nhận.<span class="d-none">[cite: 703]</span>
+                </p>
+
+                <div class="chart-container">
+                  <div class="row">
+                    <div class="col-md-6 border-end">
+                      <p class="text-muted fw-bold mb-3">
+                        Tỷ lệ sinh viên theo độ tuổi tham gia khảo sát
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Nhóm 18-20 tuổi</span><span>70.9%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-often"
+                            style="width: 70.9%"
+                            data-val="70.9%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Độ tuổi khác</span><span>29.1%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-secondary"
+                            style="width: 29.1%"
+                            data-val="29.1%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 ps-md-4">
+                      <p class="text-muted fw-bold mb-3">
+                        Thói quen mở MXH khi không có việc gì làm
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Có mở như phản xạ tự nhiên</span
+                          ><span>96%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 96%"
+                            data-val="96%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Không</span><span>4%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-success"
+                            style="width: 4%"
+                            data-val="4%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="tam-ly-2" class="content-card card anchor-offset">
+              <div class="card-header card-header-custom bg-danger">
+                2. Tâm lý FOMO - Nỗi sợ bị bỏ lại phía sau
+              </div>
+              <div class="card-body">
+                <p>
+                  FOMO khuếch đại trong môi trường mạng xã hội. Việc không cập
+                  nhật thông tin thường xuyên khiến sinh viên lúng túng trong
+                  giao tiếp nhóm, tạo áp lực ngầm phải duy trì trạng thái trực
+                  tuyến liên tục.<span class="d-none">[cite: 703]</span>
+                </p>
+
+                <div class="chart-container">
+                  <p class="text-muted fw-bold mb-3">
+                    Thời điểm và Thói quen sử dụng
+                  </p>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Sử dụng MXH "Cả ngày"</span><span>58.2%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 58.2%"
+                        data-val="58.2%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Đã sử dụng MXH hơn 6 năm</span><span>63.6%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-info"
+                        style="width: 63.6%"
+                        data-val="63.6%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="tam-ly-3" class="content-card card anchor-offset">
+              <div class="card-header card-header-custom bg-danger">
+                3. Cơ chế Dopamine & Thiết kế gây nghiện
+              </div>
+              <div class="card-body">
+                <p>
+                  Thuật toán gợi ý nội dung (như TikTok) phân tích hành vi để
+                  cung cấp video chính xác. Tính năng "cuộn vô tận" loại bỏ rào
+                  cản tự nhiên, kết hợp video ngắn khiến người dùng rơi vào vòng
+                  lặp tiêu thụ không điểm dừng.<span class="d-none"
+                    >[cite: 703]</span
+                  >
+                </p>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="chart-container h-100">
+                      <p class="text-muted fw-bold mb-3">
+                        Nền tảng được sử dụng nhiều nhất
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>TikTok</span><span>66.4%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-dark"
+                            style="width: 66.4%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Facebook</span><span>65.5%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-primary"
+                            style="width: 65.5%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>YouTube</span><span>56.4%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 56.4%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="chart-container h-100">
+                      <p class="text-muted fw-bold mb-3">
+                        Tỷ lệ biểu hiện nghiện
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Sử dụng hơn 6 giờ/ngày</span><span>30%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-danger"
+                            style="width: 30%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Có biểu hiện nghiện (nhiều mức độ)</span
+                          ><span>80%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-warning"
+                            style="width: 80%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="xa-hoi" class="anchor-offset mb-5">
+            <h2 class="section-title text-info">
+              <i class="fas fa-users me-2"></i>IV. Khía Cạnh Xã Hội
+            </h2>
+
+            <div
+              id="xa-hoi-1"
+              class="content-card card anchor-offset border-info border-2"
+            >
+              <div class="card-header card-header-custom bg-info">
+                1. Áp lực tuân thủ chuẩn mực xã hội
+              </div>
+              <div class="card-body">
+                <p>
+                  Khi một nền tảng trở thành thông lệ chung, sinh viên không
+                  tham gia dễ bị cô lập thông tin. Liên tục cập nhật xu hướng là
+                  cách để tự "thôi miên" bản thân hòa nhập vào cộng đồng.<span
+                    class="d-none"
+                    >[cite: 703]</span
+                  >
+                </p>
+                <div class="chart-container">
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Ưu tiên giao tiếp Online hơn Offline</span
+                      ><span>64.5%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-info"
+                        style="width: 64.5%"
+                        data-val="64.5%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="xa-hoi-2"
+              class="content-card card anchor-offset border-info border-2"
+            >
+              <div class="card-header card-header-custom bg-info">
+                2. Kênh thông tin học thuật không chính thức
+              </div>
+              <div class="card-body">
+                <p>
+                  Giảng viên và ban cán sự thường dùng Facebook, Zalo cập nhật
+                  lịch học. Không sử dụng MXH trở thành sự bất lợi trong trao
+                  đổi thông tin học thuật.<span class="d-none"
+                    >[cite: 703]</span
+                  >
+                </p>
+                <div class="chart-container">
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Tham gia hội nhóm học tập trực tuyến</span
+                      ><span>77.2%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-primary"
+                        style="width: 77.2%"
+                        data-val="77.2%"
+                      ></div>
+                    </div>
+                  </div>
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Thường xuyên/luôn luôn tìm tài liệu trên MXH</span
+                      ><span>60%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 60%"
+                        data-val="60%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="xa-hoi-3"
+              class="content-card card anchor-offset border-info border-2"
+            >
+              <div class="card-header card-header-custom bg-info">
+                3. Xu hướng so sánh xã hội
+              </div>
+              <div class="card-body">
+                <p>
+                  Nhìn thấy thành tích vượt trội và gia cảnh xuất chúng tràn lan
+                  khuếch đại những tiêu chuẩn không thực, gia tăng tự ti và áp
+                  lực cá nhân.<span class="d-none">[cite: 703]</span>
+                </p>
+                <div class="chart-container">
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span>Cảm thấy buồn hoặc cô đơn sau khi dùng MXH</span
+                      ><span>40%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-danger"
+                        style="width: 40%"
+                        data-val="40%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="nhu-cau" class="anchor-offset mb-5">
+            <h2 class="section-title text-success">
+              <i class="fas fa-bullseye me-2"></i>V. Khía Cạnh Nhu Cầu
+            </h2>
+
+            <div id="nhu-cau-1" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-graduation-cap me-2"></i>1. Hỗ trợ học tập &
+                  Tiếp cận tài nguyên
+                </h5>
+                <p>
+                  YouTube, Studocu, Coursera cung cấp nội dung giáo dục đa
+                  chiều. Khi gặp khó khăn, sinh viên tìm kiếm bài giảng bổ trợ
+                  thay vì tài liệu truyền thống.<span class="d-none"
+                    >[cite: 703]</span
+                  >
+                </p>
+                <div class="chart-container bg-white border-success">
+                  <div class="progress-wrapper">
+                    <div class="progress-label">
+                      <span
+                        >Đánh giá MXH giúp ích "khá nhiều" đến "rất nhiều"</span
+                      ><span>64.5%</span>
+                    </div>
+                    <div class="progress">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 64.5%"
+                        data-val="64.5%"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="nhu-cau-2" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-briefcase me-2"></i>2. Định hướng nghề nghiệp
+                  & Xây dựng thương hiệu
+                </h5>
+                <p>
+                  LinkedIn, Facebook, Instagram được dùng để xây dựng portfolio,
+                  thể hiện năng lực và tiếp cận cơ hội việc làm, part-time từ
+                  sớm.<span class="d-none">[cite: 703]</span>
+                </p>
+              </div>
+            </div>
+
+            <div id="nhu-cau-3" class="content-card card anchor-offset">
+              <div class="card-body">
+                <h5 class="sub-section-title text-success mt-0">
+                  <i class="fas fa-gamepad me-2"></i>3. Nhu cầu giải trí & Phục
+                  hồi tinh thần
+                </h5>
+                <p>
+                  Sử dụng 15-20 phút giải trí giúp não bộ nghỉ ngơi, nhưng đặc
+                  tính nền tảng thường biến điều này thành tiêu thụ thụ động kéo
+                  dài.<span class="d-none">[cite: 703]</span>
+                </p>
+                <div class="chart-container bg-white border-success">
+                  <div class="row align-items-center">
+                    <div class="col-md-8">
+                      <p class="text-success fw-bold mb-3">
+                        Mục đích chính dùng MXH:
+                      </p>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Mục đích Giải trí</span><span>64.5%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-warning"
+                            style="width: 64.5%"
+                            data-val="64.5%"
+                          ></div>
+                        </div>
+                      </div>
+                      <div class="progress-wrapper">
+                        <div class="progress-label">
+                          <span>Mục đích Học tập</span><span>9.1%</span>
+                        </div>
+                        <div class="progress">
+                          <div
+                            class="progress-bar bg-success"
+                            style="width: 9.1%"
+                            data-val="9.1%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                      <p class="mb-0 fst-italic">
+                        Mục đích giải trí cao gấp 7 lần so với mục đích học tập
+                        thuần túy.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <footer class="text-center">
+      <div class="container">
+        <h5 class="fw-bold mb-3">EduReport Analytics</h5>
+        <p class="mb-0">
+          &copy; 2026 Báo cáo: Nguyên Nhân Sinh Viên Sử Dụng Mạng Xã Hội.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const submenus = document.querySelectorAll(".submenu");
+        const mainLinks = document.querySelectorAll(".main-nav-link");
+
+        // Hàm ẩn toàn bộ submenu
+        const hideAllSubmenus = () => {
+          submenus.forEach((menu) => {
+            menu.style.display = "none";
+          });
+        };
+
+        // Sự kiện Click mở thủ công submenu
+        mainLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            hideAllSubmenus();
+            const nextEl = link.nextElementSibling;
+            if (nextEl && nextEl.classList.contains("submenu")) {
+              nextEl.style.display = "flex";
+            }
+          });
+        });
+
+        // Tích hợp ScrollSpy mở menu động
+        const scrollSpyElement = document.body;
+        scrollSpyElement.addEventListener("activate.bs.scrollspy", (e) => {
+          const activeAnchor = e.target;
+
+          if (activeAnchor.classList.contains("main-nav-link")) {
+            hideAllSubmenus();
+            const nextEl = activeAnchor.nextElementSibling;
+            if (nextEl && nextEl.classList.contains("submenu")) {
+              nextEl.style.display = "flex";
+            }
+          } else if (activeAnchor.closest(".submenu")) {
+            hideAllSubmenus();
+            const parentSubmenu = activeAnchor.closest(".submenu");
+            parentSubmenu.style.display = "flex";
+            const parentMain = parentSubmenu.previousElementSibling;
+            if (parentMain) {
+              parentMain.classList.add("active");
+            }
+          }
+        });
+
+        // Delay mở menu ban đầu
+        setTimeout(() => {
+          const currentActive = document.querySelector(
+            ".sidebar .nav-link.active",
+          );
+          if (currentActive) {
+            if (currentActive.classList.contains("main-nav-link")) {
+              const nextEl = currentActive.nextElementSibling;
+              if (nextEl && nextEl.classList.contains("submenu"))
+                nextEl.style.display = "flex";
+            } else if (currentActive.closest(".submenu")) {
+              currentActive.closest(".submenu").style.display = "flex";
+            }
+          }
+        }, 300);
+
+        // Logic xử lý Hướng dẫn sử dụng (Tutorial Overlay)
+        const tutorialOverlay = document.getElementById("tutorialOverlay");
+        const closeBtn = document.getElementById("closeTutorialBtn");
+        const targetMenu = document.getElementById("tutorial-target-menu");
+
+        if (tutorialOverlay && closeBtn && targetMenu) {
+          targetMenu.classList.add("highlight-target");
+
+          closeBtn.addEventListener("click", () => {
+            tutorialOverlay.classList.add("hidden");
+            targetMenu.classList.remove("highlight-target");
+            if (targetMenu.getAttribute("href") === location.hash) {
+              targetMenu.classList.add("active");
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
