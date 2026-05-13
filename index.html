@@ -113,6 +113,8 @@
         padding: 30px;
         display: flex;
         flex-direction: column;
+
+        gap: 20px; /* Cập nhật dòng này */
       }
       .card-title {
         font-weight: 800;
@@ -122,7 +124,7 @@
       .card-text {
         color: #666;
         font-size: 0.95rem;
-        margin-bottom: 25px;
+        margin-bottom: 40px; /*chỉnh */
       }
       .btn-report {
         background: var(--primary-color);
@@ -253,7 +255,7 @@
             </div>
             <div class="card-body">
               <div>
-                <h4 class="card-title">Thực Trạng Khảo Sát</h4>
+                <h4 class="card-title">Thực Trạng</h4>
                 <p class="card-text">
                   Dữ liệu thực tế từ 110 mẫu khảo sát về thói quen sử dụng của
                   sinh viên hiện nay.
@@ -273,7 +275,7 @@
             </div>
             <div class="card-body">
               <div>
-                <h4 class="card-title">Nguyên Nhân Sử Dụng</h4>
+                <h4 class="card-title">Nguyên Nhân</h4>
                 <p class="card-text">
                   Phân tích các động cơ tâm lý và nhu cầu xã hội thúc đẩy sinh
                   viên tham gia MXH.
@@ -293,7 +295,7 @@
             </div>
             <div class="card-body">
               <div>
-                <h4 class="card-title">Ảnh Hưởng Tác Động</h4>
+                <h4 class="card-title">Tác Động</h4>
                 <p class="card-text">
                   Đánh giá hệ lụy tiêu cực và lợi ích tích cực của MXH đến đời
                   sống sinh viên.
@@ -313,7 +315,7 @@
             </div>
             <div class="card-body">
               <div>
-                <h4 class="card-title">Đề Xuất Giải Pháp</h4>
+                <h4 class="card-title">Giải Pháp</h4>
                 <p class="card-text">
                   Hệ thống các phương pháp giúp sinh viên cân bằng và tối ưu hóa
                   việc dùng MXH.
@@ -349,23 +351,17 @@
         const guideToast = document.getElementById("guideToast");
         const closeBtn = document.getElementById("closeGuideBtn");
 
-        // ĐỔI SANG DÙNG localStorage ĐỂ TRÌNH DUYỆT NHỚ VĨNH VIỄN
-        const hasSeenTutorial = localStorage.getItem("tutorialSeen");
-
-        // Nếu chưa xem (tức là lần đầu vào trang), sau 1 giây sẽ trượt ra
-        if (hasSeenTutorial !== "true" && guideToast) {
+        // Sau 1 giây, bảng hướng dẫn sẽ luôn trượt ra (không cần kiểm tra bộ nhớ)
+        if (guideToast) {
           setTimeout(() => {
             guideToast.classList.add("show");
           }, 1000);
         }
 
-        // Xử lý khi nhấn nút Tắt (X)
+        // Xử lý khi người dùng nhấn nút Tắt (X)
         if (closeBtn && guideToast) {
           closeBtn.addEventListener("click", () => {
             guideToast.classList.remove("show");
-
-            // GHI VÀO BỘ NHỚ LÀ ĐÃ XEM
-            localStorage.setItem("tutorialSeen", "true");
           });
         }
       });
